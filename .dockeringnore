@@ -1,0 +1,15 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+.env
+
+data/input/*
+data/parsed/*
+
+.vscode
+.idea
