@@ -1,0 +1,972 @@
+
+--- Page 1 ---
+arX iv:2608.03292v1 [cs.AI] 4 Aug 2026
+
+
+
+
+
+
+
+
+
+
+             DocTrace: Towards Traceable Long Document VQA via Hierarchical Evidence
+                                         Graph Reasoning
+    Le Xiang1∗, Zhicheng Guan2∗, Hong Chen1†, Xiaocong Lin1, Zhenghua Lei1, Teng Hu1, Bolei He1,
+                                           Long Zeng2†
+               1Baidu Basic Model Research and Development Department, Baidu Inc.
+              2Tsinghua Shenzhen International Graduate School, Tsinghua University
+xiangle@baidu.com, gzc24@mails.tsinghua.edu.cn, chenhong13@baidu.com, zenglong@sz.tsinghua.edu.cn
+
+
+                            Abstract
+      Long Document Visual Question Answering (LongDocVQA)
+    requires Multimodal Large Language Models (MLLMs) to lo-
+  cate, integrate, and reason over heterogeneous document ele-
+  ments distributed across multiple pages. Existing approaches,
+     including end-to-end MLLMs, retrieval-augmented genera-
+    tion (RAG) pipelines, and document agents, often lack ex-
+     plicit mechanisms to represent and verify how grounded
+    evidence is progressively composed during reasoning, lim-
+   iting both answer accuracy and traceability. In this paper,
+      we cast LongDocVQA as an explicit evidence graph rea-
+    soning problem rather than implicit answer prediction. To
+     this end, we propose DocTrace, a hierarchical framework
+  that progressively performs evidence localization, structured
+    document parsing, and evidence graph reasoning to enable
+  explicit evidence provenance. To effectively learn these ca-
+  pabilities, we develop a two-stage training framework: joint
+ Supervised Fine-Tuning (SFT) first initializes evidence local-
+ization and graph reasoning abilities, followed by task-specific
+    Group Relative Policy Optimization (GRPO) with dedicated        Figure 1: Overview of DocTrace inference and its traceable
+  rewards to further optimize these capabilities. Extensive ex-
+      periments on MMLongBench-Doc, LongDocURL, and Slide-          evidence graph. When solving a LongDocVQA problem, the
+     VQA demonstrate that DocTrace consistently outperforms         final answer remains fully traceable back to its source nodes
+   both existing open-source baselines and proprietary MLLMs.       and document pages.
+      Compared with the Qwen3-VL-8B-Instruct backbone, Doc-
+  Trace achieves absolute improvements of 14.4, 11.3, and 11.7
+    points on the three benchmarks, respectively. Beyond com-
+  petitive performance, DocTrace constructs traceable evidence      conclusion is derived from grounded evidence rather than
+ graphs with explicit node-level provenance, enabling transpar-     treating model predictions as opaque outputs. This require-
+  ent and verifiable reasoning for long document understanding.     ment makes explicit evidence composition as important as
+                                                                    answer accuracy.
+                         1 Introduction                             Existing LongDocVQA methods can be broadly cate-
+         Long Document Visual Question Answering (Long-             gorized into end-to-end MLLMs (Kim et al. 2022; Liu
+        DocVQA) requires Multimodal Large Language Models           et al. 2026; Lee et al. 2023), retrieval-augmented genera-
+   (MLLMs) to locate, integrate, and reason over evidence dis-      tion (RAG) pipelines, and agentic frameworks. End-to-end
+   persed throughout long, visually rich documents containing       MLLMs implicitly aggregate relevant evidence within hid-
+ heterogeneous elements such as texts, tables, charts, and fig-     den representations, making it difficult to inspect how indi-
+  ures (Tito, Karatzas, and Valveny 2023; Ke et al. 2025). The      vidual evidence contributes to the final prediction. Retrieval-
+     core challenge of LongDocVQA lies in multi-hop reason-         based approaches improve efficiency by selecting relevant
+    ing, where intermediate conclusions derived from a single       pages or regions, yet they still treat retrieved evidence as
+     page must be combined with complementary evidence scat-        an unordered context rather than explicitly modeling how
+   tered across multiple pages to arrive at the final answer.       evidence is composed during reasoning. Recent document
+   In high-stakes applications such as financial auditing and       agents expose intermediate actions through iterative tool use,
+   medical analysis, only an accurate standalone prediction is      but their reasoning remains trajectory-oriented rather than
+    insufficient. Users must also be able to inspect how each       explicitly representing dependencies among grounded evi-
+    ∗These authors contributed equally.                             dence. Although these paradigms differ substantially in how
+    †Corresponding author.
+
+
+--- Page 2 ---
+they retrieve and process documents, none explicitly models                  ing, and evidence graph reasoning. By explicitly organiz-
+how grounded evidence is progressively composed into the                        ing grounded evidence into traceable reasoning graphs,
+final answer. Consequently, evidence composition remains                        DocTrace enables scalable multi-hop reasoning together
+implicit, making the reasoning process difficult to verify,           with node-level evidence provenance.
+supervise, and improve.                                                        • We develop a dedicated training paradigm for evidence
+Human experts solve long document reasoning by progres-                     graph reasoning. Specifically, we first jointly initialize
+sively narrowing the search space and organizing grounded                      evidence localization and graph reasoning through joint
+evidence into explicit reasoning structures. This naturally                     SFT on automatically generated training data, and then
+follows a hierarchical coarse-to-fine workflow: evidence lo-                 further optimize both capabilities via task-specific GRPO
+calization, structured evidence parsing, and evidence compo-          with dedicated rewards.
+sition. More importantly, human reasoning does not merely             • Extensive                experiments on MMLongBench-Doc, Long-
+accumulate evidence; it explicitly models how individual                                DocURL, and SlideVQA demonstrate that DocTrace
+evidence supports intermediate conclusions and how these                        consistently outperforms existing open-source methods,
+conclusions jointly lead to the final answer. This observa-                    achieving absolute gains of 14.4, 11.3, and 11.7 points
+tion suggests that evidence composition should be treated                          over the Qwen3-VL-8B-Instruct backbone on the three
+as an explicit reasoning object rather than remaining hid-                    benchmarks, respectively, while providing explicit node-
+den within latent model representations. Motivated by this                     level evidence provenance for transparent and traceable
+insight, we propose DocTrace, a hierarchical framework                reasoning.
+that progressively performs evidence localization, structured
+parsing, and evidence graph reasoning to explicitly model
+evidence composition. Specifically, DocTrace progressively    2 Related Work
+performs three stages. It first localizes question-relevant evi-      Long Document Understanding Dataset
+dence pages from low-resolution document images, thereby
+reducing the reasoning space. Then it parses the selected                        Long document understanding challenges models to com-
+pages into structured layout elements with semantic and spa-                  prehend and reason over lengthy documents, where crucial
+tial information. Finally, it constructs an explicit evidence            evidence is often distributed across various pages and modal-
+graph over the parsed elements and their visual context, mod-                  ities. Early datasets, such as MP-DocVQA, primarily fo-
+els intermediate reasoning dependencies, and derives the fi-                  cus on single-page question answering where the evidence
+nal answer with complete node-level evidence provenance.                     is confined to a specific page. Subsequent works, such as
+The overall pipeline is illustrated in Figure 1.                                    DUDE (Van Landeghem et al. 2023), SlideVQA (Tanaka
+Learning evidence graph reasoning is challenging be-                        et al. 2023), extend this task to multi-page reasoning and
+cause existing LongDocVQA benchmarks provide supervi-                         unanswerable questions, emphasizing cross-page localiza-
+sion only for final answers, without annotations for interme-                  tion, multimodal evidence aggregation, and long-horizon
+diate evidence localization or reasoning graphs. To bridge                  reasoning. However, these datasets do not assess documents
+this gap, we automatically construct supervision consisting                         exceeding 20 pages. More recently, MMLongBench-Doc
+of grounded evidence pages and evidence graphs, and use                        and LongDocURL (Deng et al. 2025) have scaled the chal-
+it to jointly initialize evidence localization and graph rea-              lenge to hundred-page scenarios. Despite this progress, ex-
+soning via multi-task supervised fine-tuning (SFT). We then              isting training datasets typically provide only final answers
+refine the model using task-specific Group Relative Policy                together with coarse page-level evidence annotations, offer-
+Optimization (GRPO) (Guo et al. 2025) with dedicated re-                    ing little supervision for how evidence should be composed
+wards for evidence localization, graph faithfulness and an-                 during reasoning. Consequently, models must implicitly in-
+swer correctness. This training paradigm enables DocTrace                fer reasoning trajectories from answer alone. To address this
+to construct faithful evidence graphs that inherently provide               limitation, we automatically construct structured evidence
+explicit node-level answer traceability.                                   supervision with explicit evidence organization and reason-
+Extensive experiments on three long document bench-                      ing trajectories, enabling traceable long document reasoning.
+marks demonstrate that DocTrace consistently outperforms              Methods for Long Document Understanding
+open-source baselines and rivals proprietary models such as
+GPT-4.1 and Claude-3.7-Sonnet. On the ultra-long bench-                               Traditional End-to-end methods (mPLUGDocOwl2 (Hu
+mark MMLongBench-Doc (Ma et al. 2024), it achieves 52.9                        et al. 2025), InternVL3 (Zhu et al. 2025), Qwen3VL (Bai
+accuracy, improving the backbone by 14.4 points. It also                  et al. 2025), Gemini 3) directly process entire documents by
+demonstrates robust performance across varying document                  leveraging extended context windows or efficient visual token
+lengths. Beyond accuracy, DocTrace provides explicit node-                  compression. Despite their impressive capability, evidence
+level evidence provenance, making every prediction trans-                   selection and aggregation remain entirely implicit. Visual
+parent and verifiable.                                                              RAG methods (VisRAG (Yu et al. 2025), SV-RAG (Chen
+Our core contributions are summarized as follows:                       et al. 2024), VDocRAG (Tanaka et al. 2025)) first retrieve the
+                                                                           Top-K relevant pages before performing fine-grained reason-
+• We propose DocTrace, a hierarchical coarse-to-fine                   ing. Recent studies further incorporate layout-aware retrieval,
+                  framework for LongDocVQA that progressively per-          OCR information, and visual representations to improve re-
+            forms evidence localization, structured document pars-    trieval quality. However, retrieved evidence is still treated as
+
+
+--- Page 3 ---
+       (a) Training Data Construction                                                                                Question: 2nd largest % ?     data     derived
+                                           TT                                                                        Evidence Pages: [p8,p13]      node     node
+    T      ABER                  Pade                                                                                                              2      Answer                sufficient
+           Parsing                                 QA Synthesis                                         Graph Annotation                               5    85%                 consistent
+                                                                                                                                                                    Verify      drop else Drop
+
+                                                                    p8                              p13
+    Raw Document                         Evidence Blocks            Selected Evidence                                                           Evidence Graph                   Pass
+
+       (b) Joint SFT            ig                                  Input:                                                  === - =- -=
+                                                                                                                            === - =- -=     Question: 2nd
+                                         Input:                 Question: 2nd                                               === - =- -=     largest % ?
+                                                                largest % ?    Ea               p8 p13                      === - =- -=                                              pd
+       MLLM                     I                                                               evidence pages            evidence list                            single-page   irrelevant
+                   all pages                                        Output:                     <evidence_chain>                                                   answerable    unanswerable
+           Input  in low_res                                                                        <node=n1 role=data> p8_b1 "xxx"                    Include
+                                i        Output: <evidence_pages>                                   <node=......>                                                               v
+                                                       8,13                                         <node=n5 role=derived deps=n1,n3> "xxx"            1
+                                hy               </evidence_pages>                              </evidence_chain>
+           Initialize                    i                                                      <reasoning> xxx </reasoning>                                       multi-page    detail-absent
+                                                                                                <answer> 85% </asnwer>                                             answerable    unanswerable
+                                         Stage 1: Evidence Localization      Stage 3: Evidence Graph Reasoning                                                           Traning Scenarios
+
+                                                                                                                                                       ion          Ou tput          Rans
+       (c) Task-specific GRPO                                                                                                                       Rgraph Reward Funct
+       Question                                                     Stage 1     {8,13} {8,12} {9} ...                                             Output    Rloc
+                                                      Policy                                    o1 o2 o3                                          {8,13}    1.0
+           Input                                       Model              Rollout    Stage 3                         ...                          {8,12}    0.5
+    Pass-rate Filtering Data                       Advantage                                    o1     o2 o3                                       {9}      0.0
+Reference                       KL Loss                                                             Output
+  Model
+
+    Figure 2: Overview of our training framework. (a) Training data consturcution using self-collected long docuemnt corpus. (b)
+    Joint SFT, where the model is supervised fine-tuned on high-quality evidence localization and evidence graph reasoning data.
+    (c) Task-specific GRPO, where the policy model is optimized by task-specific reward, including localization reward, graph
+    faithfulness reward and answer correctness reward.
+
+
+    an unordered collection of pages or chunks, leaving evidence        DocTrace Framework
+    composition to be implicitly inferred by MLLMs and making           Stage 1: Evidence Localization.                                                                   Processing all document
+    cross-page reasoning particularly challenging. More recently,       pages at native resolution is computationally prohibitive and
+    Agent-based methods (VRAG-RL (Wang et al. 2026), Doc-∗
+    V (Zheng et al. 2026), MM-Doc-R1 (Lin et al. 2026)) have            often exceeds the context capacity of current MLLMs. There-
+    emerged as a promising paradigm, where models actively              fore, DocTrace first performs coarse evidence localization
+    search, navigate, inspect, and iteratively collect information      over uniformly downsampled document pages.
+    from long documents through multi-step interactions. Never-                                                                             Given the low-resolution document images and question
+    theless, these interaction trajectories do not explicitly model     Q, DocTrace predicts a set of evidence page indices
+    how grounded evidence is composed into the final answer.
+    Overall, existing methods generally represent evidence as    Pevid = fθloc (Dlow, Q),
+    implicit context, retrieved pages, or interaction trajectories.                                                                        where Pevid denotes the predicted evidence pages. Only
+    Explicit modeling of evidence dependencies remains largely          these pages are forwarded to subsequent stages, substantially
+    unexplored, limiting both answer traceability and effective         reducing the search space while preserving question-relevant
+    supervision for complex cross-page reasoning.                       information.
+
+                                                                        Stage 2: Structured Document Parsing.                                                                       The localized
+3 Methodology                                                           evidence pages are subsequently processed at their native
+    Overview                                                            resolution using a document parsing model (PaddleOCR-VL-
+                                                                        1.5 (Cui et al. 2026)) to extract fine-grained layout elements.
+    DocTrace casts LongDocVQA as an evidence graph rea-                 Each element is represented as
+    soning problem. Instead of directly predicting answers from
+    long documents, it progressively localizes question-relevant    bi = (ti, xi, ci),
+    pages, converts them into structured evidence units, and
+    constructs an evidence graph that explicitly models how                                                                        where ti denotes the semantic type (e.g., text, table, figure,
+    grounded evidence is composed to derive the final answer.           or chart), xi                                                       is its bounding box, and ci          is the extracted
+    This hierarchical coarse-to-fine design simultaneously re-          content. Collectively, these parsed elements form an evidence
+    duces the reasoning space while providing node-level evi-           pool
+    dence provenance. An overview of DocTrace training frame-
+    work is illustrated in Figure 2.                             B = {b1, b2, . . . , bM},
+
+
+--- Page 4 ---
+               which serves as the atomic evidence units for subsequent     Localization Reward.          Since page localization is ordinal
+    graph reasoning.                                                        rather than binary, predictions closer to the ground-truth
+                                                                            pages should receive higher rewards than distant ones. We
+    Stage 3: Evidence Graph Reasoning.                 Given the struc-     therefore adopt a distance-aware soft Fβ reward that assigns
+    tured evidence pool, DocTrace explicitly constructs an ev-              partial credit to nearby predictions while favoring high recall.
+    idence graph to model how grounded evidence is progres-                           Let Pˆ be the predicted evidence pages parsed from the
+    sively composed into the final answer. Formally,                        <evidence_pages> tag and G the ground-truth evidence
+               G = (V, E),                                                  pages. Exact matches contribute h = |Pˆ ∩ G|, while each
+                                                                            unmatched gold page is greedily assigned to its nearest un-
+                   where each node corresponds to either a grounded ev-     matched prediction and receives a distance-dependent soft
+    idence block from B or an intermediate reasoning result,                credit d(k), where k = |pˆ - g| is the page-index distance.
+    while each directed edge represents a reasoning dependency.             The soft precision and recall are defined as
+    The reasoning process is formulated as                                      Prec = h + s    ,      Rec = h + s    ,                  (1)
+                                                                                |Pˆ|        |G|
+P(A, G | B, Q) = P(G | B, Q)P(A | G, Q),                                    where s is the accumulated soft credit. The Stage1 reward is
+                where the model first constructs the evidence graph and         Rstage1 =     (1 + β2    )Prec · Rec    ,
+    then generates the final answer conditioned on it. Since every              β2Prec + Rec                                             (2)
+    reasoning step is explicitly grounded in document evidence,
+    the resulting graph naturally provides node-level evidence              where β controls the precision-recall trade-off.
+    provenance for answer verification.                                             To jointly optimize evidence graph generation and answer
+                                                                            prediction, the Stage3 reward is defined as
+    Learning DocTrace                                                           Rstage3 = λRgraph + (1 - λ)Ranswer,                      (3)
+    Training Data Construction. Existing LongDocVQA                                  where λ balances evidence graph faithfulness and answer
+    benchmarks provide only question-answer pairs, making it                correctness.
+    impossible to directly supervise evidence localization or ev-
+    idence graph reasoning. To bridge this supervision gap, we              Graph Faithfulness Reward.             Optimizing only the final
+    automatically construct structured supervision consisting of            answer does not guarantee reasoning faithful to the support-
+    evidence pages and evidence graphs.                                     ing document evidence. We therefore optimize the gener-
+            Specifically, we categorize training samples into four rep-     ated evidence graph by jointly evaluating evidence ground-
+    resentative scenarios according to answerability and rea-               ing, graph completeness, structural validity, and dependency
+    soning complexity: (1) single-page answerable, (2) multi-               topology:
+    page answerable, (3) irrelevant unanswerable, and (4) detail-
+    absent unanswerable. This taxonomy covers both evidence    Rgraph = whRhit + wcRcomp + wsRstruct + wtRtopo.
+    composition and calibrated refusal behaviors.                           Here, Rhit rewards accurate evidence grounding by maxi-
+                       For each sample, Gemini 3.1 Pro (Google DeepMind     mizing the overlap between predicted and reference evidence
+    2026) first generates grounded evidence pages together with             nodes. Rcomp encourages complete yet compact evidence
+    the corresponding evidence graph. GPT-5.5 (OpenAI 2026)                 graphs by discouraging both missing reasoning steps and re-
+    then independently validates evidence sufficiency and logical           dundant nodes. Rstruct enforces structural validity, including
+    consistency. Only verified samples are retained to construct            executable DAG constraints and valid evidence references.
+    the final supervision corpus for subsequent training.                   Finally, Rtopo encourages reasoning dependencies that are
+    Joint SFT.  Using the generated corpus, we jointly optimize             consistent with the reference graph topology. Together, these
+    evidence localization and evidence graph reasoning through              rewards promote evidence graphs that are both faithful to the
+    multi-task SFT. Given low-resolution document pages, the                supporting evidence and structurally consistent.
+    model predicts evidence page indices; given localized high-             Answer Correctness Reward. The answer reward opti-
+    resolution pages and their parsed layout elements, it learns to         mizes the correctness of the final prediction:
+    generate evidence graphs together with the final answers.
+    This stage provides a strong initialization for subsequent         Ranswer = αRexact + (1 - α)Rllm,
+    GRPO alignment.                                                                   where Rexact performs exact matching for deterministic
+    GRPO Alignment Although joint SFT provides a strong                     answers, while Rllm employs an LLM-based verifier to assess
+    initialization, it cannot fully optimize evidence localization          semantic equivalence for answers with flexible surface forms.
+    and graph reasoning. We therefore further align DocTrace                           For unanswerable questions, the reward encourages ab-
+    using task-specific GRPO objectives: Stage1 optimizes evi-              stention when sufficient supporting evidence is unavailable
+    dence page localization, while Stage3 jointly optimizes evi-            and penalizes hallucinated answers, improving prediction
+    dence graph generation and final answer prediction.                     calibration.
+
+
+--- Page 5 ---
+    Method                      Backbone       Param.  Paradigm  MMLong.  LongDoc.  SlideVQA
+                                                                  (Acc)     (Acc)     (F1)
+    Closed Source
+    Gemini-1.5-Pro                  -             -       E2E      28.2     50.9        -
+    GPT-4o                          -             -       E2E      42.8     64.5      65.8
+    GPT-4.1                         -             -       E2E      45.6       -       74.7
+    Claude-3.7-Sonnet               -             -       E2E      33.9       -       76.3
+    Open Source
+    mPLUG-DocOwl2 (ACL'25)      ViT/LLaMA        8B       E2E      13.4      5.3      27.8
+    M3DocRAG (arXiv'24)         Qwen2-VL         7B       RAG      21.0     35.1      55.7
+    VisRAG (ICLR'25)          MiniCPM-V-2.6      8B       RAG      18.8     41.9      52.4
+    SV-RAG (ICLR'25)            InternVL2        4B       RAG      23.0       -       34.3
+    VDocRAG (CVPR'25)          Phi3-Vision       4B       RAG      18.4     39.8      42.0
+    Docopilot (CVPR'25)         InternVL2        8B       E2E      28.8       -       43.1
+    InternVL3 (arXiv'25)    InternViT/Qwen2.5    8B       E2E      24.1     38.7      64.4
+    VRAG-RL (NeurIPS'25)       Qwen2.5-VL        7B      Agent     26.6     44.9        -
+    MoLoRAG (EMNLP'25)         Qwen2.5-VL        7B       RAG      41.0     51.9        -
+    URaG (AAAI'26)             Qwen2.5-VL        7B       RAG      33.8     52.2        -
+    DocSeeker (CVPR'26)∗       Qwen2.5-VL        7B       E2E      40.1     51.7      77.1
+    Doc-V     (ACL'26)         Qwen2.5-VL        7B      Agent     42.1     56.3      77.2
+    MM-Doc-R1 (ACL'26)            Qwen3          8B      Agent     49.7       -         -
+                                                 Ours
+    Qwen3-VL (Baseline)         Qwen3-VL         8B       E2E      38.5     45.1      73.4
+    DocTrace (SFT)              Qwen3-VL         8B      Agent     50.3+11.8     53.2+8.1                83.8+10.4
+    DocTrace (GRPO)             Qwen3-VL         8B      Agent     52.9+14.4     56.4+11.3               85.1+11.7
+
+    Table 1: Performance comparison on three long document understanding benchmarks: MMLongBench-Doc (Acc), Long-
+    DocURL (Acc), and SlideVQA (F1). The best and second-best results among open-source methods are highlighted in bold and
+    underlined, respectively. Red superscripts denote the absolute improvement over Qwen3-VL-8B-Instruct.
+
+
+           The proposed rewards are applied during their correspond-     GT page Coverage (Cov.) for evidence localization, alongside
+    ing GRPO optimization stages, enabling DocTrace to learn             Accuracy across Single-page, Multi-page, and Unanswerable
+    accurate evidence localization, faithful evidence graph rea-         question categories for answer generation.
+    soning, and reliable answer prediction in a unified reinforce-
+    ment learning framework.                                             Implementation Details.                   We adopt Qwen3-VL-8B-
+                                                                         Instruct as the backbone and perform full-parameter fine-
+4 Experiments                                                            tuning on 16 NVIDIA A800 GPUs. During SFT, Stage 1 and
+                                                                         Stage 3 data are jointly optimized for 3 epochs with a learning
+    Experimental Setup                                                   rate of 5 × 10-6     . During GRPO, Stage 1 and Stage 3 are op-
+    Datasets.        For training, we construct a multi-stage train-     timized sequentially for 2 epochs each using a learning rate
+    ing corpus using self-collected long documents (up to 120            of 5 × 10-7   and a group size of 8. For Stage 1, the localiza-
+    pages). It contains synthesized supervision for Stage 1 ev-          tion reward uses β = 2.0. For Stage 3, the graph faithfulness
+    idence localization and Stage 3 evidence graph reasoning.            and answer correctness rewards are weighted by 0.3 and 0.7,
+    See Appendix for more details.                                       respectively. The maximum sequence length is 32K during
+                  For evaluation, we evaluate DocTrace on three long     training and 128K during inference. Additional implemen-
+    document benchmarks: MMLongBench-Doc (135 docu-                      tation details and hyperparameter settings are provided in
+    ments, avg. 47.5 pages, 1,082 questions; 33.7% cross-page,           Appendix.
+    20.9% unanswerable), LongDocURL (396 documents up                    Baselines.           We compare DocTrace against representative
+    to 150 pages, 2,325 QA pairs; 52.9% multi-page), and                 baselines spanning three paradigms: (i) End-to-end mod-
+    SlideVQA (2,215 questions across 20-slide documents;                 els, including mPLUG-DocOwl2, Docopilot (Duan et al.
+    49.3% multi-hop/numerical). Notably, MMLongBench-Doc
+    requires whole-document reasoning, whereas LongDocURL                2025), InternVL3,and DocSeeker (Yan et al. 2026); (ii) RAG
+    uses fixed 30-page windows.                                          methods, including M3DocRAG (Cho et al. 2024), Vis-
+                                                                         RAG, SV-RAG, VDocRAG, MoLoRAG (Wu et al. 2025),
+    Evaluation Metrics.          All methods are evaluated following     and URaG (Shi et al. 2026); and (iii) Agent-based ap-
+    the official evaluation protocols of each benchmark. We re-          proaches, including VRAGRL, Doc-V∗             , and MM-Doc-R1.
+    port Accuracy on MMLongBench-Doc and LongDocURL,                     We additionally include proprietary MLLMs (Gemini-1.5-
+    and F1 score on SlideVQA. For fine-grained analysis on               Pro (Team et al. 2024), GPT-4o (Hurst et al. 2024), GPT-4.1,
+    MMLongBench-Doc, we additionally report Page F1 and                  and Claude-3.7-Sonnet) as reference points, and report the
+
+
+--- Page 6 ---
+                   Page Loc.    QA Type                                 on single-page (52.6→53.2), multi-page (40.8→41.1), and
+Train.          F1 Cov. Single Multi Unans.                Acc          especially unanswerable questions (66.0→70.5), resulting in
+                                                                        the best overall accuracy of 52.9.
+Baseline        -      -         46.9    35.3     25.8     38.5             Together, these observations highlight the complementary
+SFT                70.8 62.4     51.7    37.7     68.0     50.3         roles of the two optimization stages: Stage 1 strengthens
++ RL (S1)          71.3 65.5     52.6    40.8     66.0     51.5         evidence acquisition, whereas Stage 3 improves evidence
++ RL (S1+S3) 70.8 64.6           53.2    41.1     70.5     52.9         utilization and answer reliability.
+
+Table 2: Fine-grained performance comparison of the                     Analysis of Long-Document Scalability
+Qwen3-VL-8B-Instruct baseline and DocTrace at different                 To evaluate the scalability of DocTrace on increasingly long
+training stages on MMLongBench-Doc. "F1" denotes Page                   documents, we conduct a controlled experiment on a subset
+F1, and "Cov." denotes ground-truth page coverage.                      of MMLongBench-Doc containing documents longer than
+                                                                        60 pages. For each target length W, documents are truncated
+backbone model Qwen3-VL-8B-Instruct for direct compar-                  or padded with answer-free pages while keeping the questions
+ison. Detailed descriptions of these baseline methods are               unchanged, isolating the effect of document length.
+provided in Appendix.                                                         As shown in Figure 3(a), the performance of the Qwen3-
+                                                                        VL-8B baseline deteriorates rapidly as document length in-
+Main Results                                                            creases, with accuracy dropping from 49.5 to 34.0. In con-
+                                                                        trast, DocTrace consistently outperforms the baseline and
+Comparison with State-of-the-Art Methods.                  As shown     maintains much more stable performance across different
+in Table 1, DocTrace (GRPO) consistently outperforms both               document lengths.
+open-source and proprietary models across all three bench-               Figure 3(b) provides further insight into this degradation.
+marks. On the challenging MMLongBench-Doc, DocTrace                     Although evidence retrieval coverage gradually decreases
+achieves the best accuracy of 52.9, outperforming the pre-              from 70.6 to 50.2 as documents become longer, the an-
+vious strongest open-source method MM-Doc-R1 (49.7) by                  swer accuracy conditioned on successful evidence local-
+3.2 points and the proprietary model GPT-4.1 (45.6) by 7.3              ization remains largely unchanged. This suggests that Doc-
+points. On LongDocURL, DocTrace achieves the highest ac-                Trace's evidence graph reasoning remains robust to increas-
+curacy of 56.4, slightly surpassing Doc-V∗        (56.3). On Slide-     ing document length, and that further scalability improve-
+VQA, DocTrace establishes a new state of the art with 85.1              ments mainly depend on stronger evidence localization.
+F1, exceeding Doc-V∗ by              7.9 points. These results show
+that explicit evidence graph reasoning consistently improves
+long-document understanding across diverse benchmarks.
+Effectiveness of the Training Paradigm.            We further eval-
+uate the effectiveness of our two-stage training paradigm,
+which combines joint SFT with task-specific GRPO. As
+shown in Table 1, joint SFT substantially improves all
+three benchmarks over the Qwen3-VL-8B backbone, yield-
+ing gains of 11.8, 8.1, and 10.4 points on MMLongBench-
+Doc, LongDocURL, and SlideVQA, respectively. Building
+on this strong initialization, task-specific GRPO provides
+consistent additional improvements, achieving the best over-
+all performance of 52.9, 56.4, and 85.1 on the three bench-
+marks.
+Analysis of Task-Specific GRPO. To better understand
+the complementary effects of task-specific GRPO, Table 2
+presents a fine-grained analysis on MMLongBench-Doc.
+               Applying GRPO to Stage 1 primarily improves evidence
+localization, increasing Page F1 from 70.8 to 71.3 and page
+coverage from 62.4 to 65.5. Better evidence retrieval consis-
+tently benefits both single-page (51.7→52.6) and multi-page
+(37.7→40.8) questions. Meanwhile, the accuracy on unan-                 Figure 3: Performance comparison on different document
+swerable questions drops slightly (68.0→66.0), suggesting               length. (a) Acc; (b) Retrieval Cov. vs. cond Acc.
+that improved evidence recall also encourages more aggres-
+sive answering when supporting evidence is insufficient.
+             Applying GRPO to Stage 3 further improves answer qual-
+ity through more effective evidence aggregation and reason-             Traceability Analysis of Evidence Graph Reasoning
+ing. Although retrieval metrics decrease slightly due to op-            To assess the reliability of DocTrace evidence graph reason-
+timization trade-offs, answer accuracy continues to improve             ing, we perform both qualitative visualizations and quanti-
+
+
+--- Page 7 ---
+tative evaluations on MMLongBench-Doc. More details are            tural parsing and evidence graph reasoning components in
+provided in Appendix.                                             DocTrace. The results are summarized in Table 9.
+As illustrated in Figure 4, DocTrace constructs an explicit
+evidence graph that links supporting evidence across mul-            Effect of Core Components. Removing either structural
+tiple document pages through intermediate reasoning steps.         parsing or evidence graph reasoning consistently degrades
+In this example, the model associates demographic infor-          the overall performance, reducing the accuracy from 50.3 to
+mation on Page 8 with the corresponding Wi-Fi promotion          46.6 and 47.2, respectively. Both variants suffer substantial
+on Page 13, producing a transparent reasoning path from            performance drops on multi-page questions, demonstrating
+grounded evidence to the final answer.                            that structured representations and explicit evidence graph
+We further evaluate the traceability of the generated evi-        reasoning are essential for integrating dispersed evidence
+dence graphs from three perspectives: provenance integrity,          across long documents. Compared with removing struc-
+evidence localization, and causal faithfulness (Table 3). Doc-    tural parsing, removing evidence graph reasoning preserves
+Trace achieves 99.5% evidence grounding accuracy and             stronger single-page performance (47.1 vs. 44.6), suggesting
+99.6% graph integrity, indicating that the generated reason-    that parsed structures remain effective for local evidence un-
+ing traces are consistently anchored to valid document evi-       derstanding, while graph reasoning primarily contributes to
+dence. The evidence localization F1 reaches 72.5%, demon-          multi-hop reasoning over cross-page evidence. Meanwhile,
+strating effective retrieval of supporting evidence from long      both variants achieve higher unanswerable accuracy (74.2
+documents. Furthermore, counterfactual evaluation shows           and 74.5), indicating a more conservative prediction behav-
+that masking cited evidence flips 82.8% of originally cor-         ior that improves unanswerable detection but compromises
+rect predictions, whereas masking uncited evidence changes        answerable question solving.
+only 9.6%. This large gap indicates that the generated evi-
+dence graphs capture the evidence that genuinely supports
+the model's predictions.                                             Comparison with Vanilla CoT. Replacing evidence graph
+                                                                reasoning with vanilla CoT (Wei et al. 2022) achieves 47.8 ac-
+                                                                 curacy. Although it slightly improves single-page QA (53.2),
+                                                                  it performs worse on multi-page questions (34.8) and unan-
+                                                                 swerable questions (58.2). This suggests that vanilla linear
+                                                                  reasoning can handle local evidence aggregation but strug-
+                                                                 gles to preserve structured evidence dependencies and effec-
+                                                                  tively handle complex long document reasoning.
+
+                                                                  Setting    QA Type                                  Acc
+                                                                                            Single  Multi  Unans.
+Figure 4: Qualitative visualization of DocTrace evidence          DocTrace (SFT)             51.7    37.7    68.0     50.3
+graph reasoning for a multi-page reasoning task.                  w/o Structural Parsing     44.6    30.6    74.2     46.6
+                                                                  w/o Graph Reasoning        47.1    30.2    74.5     47.2
+                                                                  w/ Vanilla CoT             53.2    34.8    58.2     47.8
+
+Traceability Metric                  Score    Verifier            Table 4: Ablation study of structural parsing and evidence
+Provenance Integrity                                              graph reasoning on MMLongBench-Doc.
+Evidence Grounding                    99.5      Rule
+Evidence Graph Integrity              99.6      Rule
+Evidence Localization
+Evidence Localization F1              72.5       GT                                      5 Conclusion
+Causal Faithfulness
+Evidence Necessity                    82.8      C.F.               In this paper, we cast LongDocVQA as an explicit evidence
+Evidence Specificity                   9.6      C.F.              graph reasoning problem and propose DocTrace, a hierarchi-
+                                                                 cal framework that progressively performs evidence localiza-
+Table 3: Quantitative evaluation of DocTrace evidence graph       tion, structured document parsing, and evidence graph rea-
+traceability on MMLongBench-Doc. Scores are percentages.           soning. We further develop a two-stage training framework
+C.F. denotes counterfactual evaluation by masking evidence         combining SFT and task-specific GRPO to improve evidence
+and re-evaluating the same model.                                acquisition and reasoning capabilities. Experimental results
+                                                                   demonstrate that DocTrace achieves strong and robust per-
+                                                                    formance across multiple long-document benchmarks. Be-
+Ablation Study                                                     yond competitive performance, DocTrace provides explicit
+We conduct ablation studies on MMLongBench-Doc based               node-level evidence provenance, enabling transparent and
+on the SFT model to evaluate the contribution of the struc-       verifiable reasoning for long document understanding.
+
+
+--- Page 8 ---
+References                                                              Lee, K.; Joshi, M.; Turc, I. R.; Hu, H.; Liu, F.; Eisensch-
+    Bai, S.; Cai, Y.; Chen, R.; Chen, K.; Chen, X.; Cheng, Z.;          los, J. M.; Khandelwal, U.; Shaw, P.; Chang, M.-W.; and
+    Deng, L.; Ding, W.; Gao, C.; Ge, C.; et al. 2025. Qwen3-vl          Toutanova, K. 2023. Pix2struct: Screenshot parsing as pre-
+    technical report. arXiv preprint arXiv:2511.21631.                  training for visual language understanding. In International
+                                                                        Conference on Machine Learning, 18893-18912. PMLR.
+    Chen, J.; Zhang, R.; Zhou, Y.; Yu, T.; Dernoncourt, F.; Gu, J.;     Lin, J.; Hu, K.; Wang, B.; Zhou, Y.; Xi, Z.; Guo, H.; Liu,
+    Rossi, R. A.; Chen, C.; and Sun, T. 2024. SV-RAG: LoRA-             S.; Wang, J.; Dou, S.; Zhou, E.; et al. 2026.             MM-Doc-
+    contextualizing adaptation of MLLMs for long document
+    understanding. arXiv preprint arXiv:2411.01106.                     R1: Training Agents for Long Document Visual Question
+                                                                        Answering through Multi-turn Reinforcement Learning. In
+    Cho, J.; Mahata, D.; Irsoy, O.; He, Y.; and Bansal, M.              Findings of the Association for Computational Linguistics:
+    2024. M3docrag: Multi-modal retrieval is what you need for          ACL 2026, 29770-29783.
+    multi-page multi-document understanding. arXiv preprint
+    arXiv:2411.04952.                                                   Liu, Y.; Yang, B.; Liu, Q.; Li, Z.; Ma, Z.; Zhang, S.; and Bai,
+                                                                        X. 2026. Textmonkey: An ocr-free large multimodal model
+    Cui, C.; Sun, T.; Liang, S.; Gao, T.; Zhang, Z.; Liu, J.; Wang,     for understanding document. IEEE Transactions on Pattern
+    X.; Zhou, C.; Liu, H.; Lin, M.; et al. 2026. PaddleOCR-VL-          Analysis and Machine Intelligence.
+    1.5: Towards a Multi-Task 0.9 B VLM for Robust In-the-Wild
+    Document Parsing. arXiv preprint arXiv:2601.21957.                  Ma, Y.; Zang, Y.; Chen, L.; Chen, M.; Jiao, Y.; Li, X.; Lu, X.;
+    Deng, C.; Yuan, J.; Bu, P.; Wang, P.; Li, Z.-Z.; Xu, J.; Li,        Liu, Z.; Ma, Y.; Dong, X.; et al. 2024. Mmlongbench-doc:
+    X.-H.; Gao, Y.; Song, J.; Zheng, B.; et al. 2025. Longdocurl:       Benchmarking long-context document understanding with
+    a comprehensive multimodal long document benchmark in-              visualizations. Advances in Neural Information Processing
+    tegrating understanding, reasoning, and locating. In Pro-           Systems, 37: 95963-96010.
+    ceedings of the 63rd Annual Meeting of the Association for          OpenAI. 2026.    GPT-5.5 Instant System Card.              https:
+    Computational Linguistics (Volume 1: Long Papers), 1135-            //deploymentsafety.openai.com/gpt-5-5-instant.          Accessed:
+    1159.                                                               July 2026. Closed-source model accessed via API; no dedi-
+    Duan, Y.; Chen, Z.; Hu, Y.; Wang, W.; Ye, S.; Shi, B.; Lu,          cated arXiv technical report released.
+    L.; Hou, Q.; Lu, T.; Li, H.; et al. 2025. Docopilot: Improving      Shi, Y.; Wang, J.; Shan, Z.; Peng, D.; Lin, Z.; and Jin, L. 2026.
+    multimodal models for document-level understanding. In              URaG: Unified retrieval and generation in multimodal LLMs
+    Proceedings of the Computer Vision and Pattern Recognition          for efficient long document understanding. In Proceedings
+    Conference, 4026-4037.                                              of the AAAI Conference on Artificial Intelligence, volume 40,
+    Google DeepMind. 2026. Gemini 3.1 Pro Model Card.                   25357-25365.
+    https://deepmind.google/models/model-cards/gemini-3-1-              Tanaka, R.; Iki, T.; Hasegawa, T.; Nishida, K.; Saito, K.; and
+    pro/. Accessed: July 2026. Closed-source multimodal model           Suzuki, J. 2025. Vdocrag: Retrieval-augmented generation
+    accessed via official API.                                          over visually-rich documents. In Proceedings of the Com-
+    Guo, D.; Yang, D.; Zhang, H.; Song, J.; Wang, P.; Zhu, Q.;          puter Vision and Pattern Recognition Conference, 24827-
+    Xu, R.; Zhang, R.; Ma, S.; Bi, X.; et al. 2025. Deepseek-r1:        24837.
+    Incentivizing reasoning capability in llms via reinforcement        Tanaka, R.; Nishida, K.; Nishida, K.; Hasegawa, T.; Saito, I.;
+    learning. arXiv preprint arXiv:2501.12948.                          and Saito, K. 2023. Slidevqa: A dataset for document visual
+    Hu, A.; Xu, H.; Zhang, L.; Ye, J.; Yan, M.; Zhang, J.; Jin,         question answering on multiple images. In Proceedings of
+    Q.; Huang, F.; and Zhou, J. 2025. mplug-docowl2: High-              the AAAI Conference on Artificial Intelligence, volume 37,
+    resolution compressing for ocr-free multi-page document un-         13636-13645.
+    derstanding. In Proceedings of the 63rd Annual Meeting of           Team, G.; Georgiev, P.; Lei, V. I.; Burnell, R.; Bai, L.;
+    the Association for Computational Linguistics (Volume 1:            Gulati, A.; Tanzer, G.; Vincent, D.; Pan, Z.; Wang, S.;
+    Long Papers), 5817-5834.                                            et al. 2024. Gemini 1.5: Unlocking multimodal understand-
+    Hurst, A.; Lerer, A.; Goucher, A. P.; Perelman, A.; Ramesh,         ing across millions of tokens of context.          arXiv preprint
+    A.; Clark, A.; Ostrow, A.; Welihinda, A.; Hayes, A.; Rad-           arXiv:2403.05530.
+    ford, A.; et al. 2024. Gpt-4o system card. arXiv preprint           Tito, R.; Karatzas, D.; and Valveny, E. 2023. Hierarchi-
+    arXiv:2410.21276.                                                   cal multimodal transformers for multipage docvqa. Pattern
+    Ke, W.; Zheng, Y.; Li, Y.; Xu, H.; Nie, D.; Wang, P.; and He,       Recognition, 144: 109834.
+    Y. 2025. Large language models in document intelligence:            Van Landeghem, J.; Tito, R.; Borchmann, Ł.; Pietruszka,
+    A comprehensive survey, recent advances, challenges, and            M.; Joziak, P.; Powalski, R.; Jurkiewicz, D.; Coustaty, M.;
+    future trends. ACM Transactions on Information Systems,             Anckaert, B.; Valveny, E.; et al. 2023. Document under-
+    44(1): 1-64.                                                        standing dataset and evaluation (dude). In Proceedings of
+    Kim, G.; Hong, T.; Yim, M.; Nam, J.; Park, J.; Yim, J.;             the IEEE/CVF International Conference on Computer Vi-
+    Hwang, W.; Yun, S.; Han, D.; and Park, S. 2022. Ocr-free            sion, 19528-19540.
+    document understanding transformer. In European Confer-             Wang, Q.; Ding, R.; Zeng, Y.; Chen, Z.; Chen, L.; Wang,
+    ence on Computer Vision, 498-517. Springer.                         S.; Xie, P.; Huang, F.; and Zhao, F. 2026. Vrag-rl: Empower
+
+
+--- Page 9 ---
+vision-perception-based rag for visually rich information un-
+derstanding via iterative reasoning with reinforcement learn-
+ing. Advances in Neural Information Processing Systems,
+38: 57133-57160.
+Wei, J.; Wang, X.; Schuurmans, D.; Bosma, M.; Xia, F.; Chi,
+E.; Le, Q. V.; Zhou, D.; et al. 2022. Chain-of-thought prompt-
+ing elicits reasoning in large language models. Advances in
+neural information processing systems, 35: 24824-24837.
+Wu, X.; Tan, Y.; Hou, N.; Zhang, R.; and Cheng, H. 2025.
+Molorag: Bootstrapping document understanding via multi-
+modal logic-aware retrieval. In Proceedings of the 2025
+Conference on Empirical Methods in Natural Language Pro-
+cessing, 14035-14056.
+Yan, H.; Liu, Y.; Liu, X.; Zhang, Y.; Liao, M.; Wu, J.; Chen,
+W.; and Bai, X. 2026. DocSeeker: Structured visual rea-
+soning with evidence grounding for long document under-
+standing. In Proceedings of the IEEE/CVF conference on
+computer vision and pattern recognition, 41140-41149.
+Yu, S.; Tang, C.; Xu, B.; Cui, J.; Ran, J.; Yan, Y.; Liu, Z.;
+Wang, S.; Han, X.; Liu, Z.; et al. 2025. Visrag: Vision-
+based retrieval-augmented generation on multi-modality
+documents. In International Conference on Learning Rep-
+resentations, volume 2025, 21074-21098.
+Zheng, Y.; Fu, P.; Li, H.; Wang, Z.; Zhang, Y.; Ruan, W.;
+Zhang, X.; Wei, Z.; Luo, Z.; Luan, J.; et al. 2026. Doc-V*:
+Coarse-to-Fine Interactive Visual Reasoning for Multi-Page
+Document VQA. In Proceedings of the 64th Annual Meeting
+of the Association for Computational Linguistics (Volume 1:
+Long Papers), 45901-45923.
+Zhu, J.; Wang, W.; Chen, Z.; Liu, Z.; Ye, S.; Gu, L.; Tian,
+H.; Duan, Y.; Su, W.; Shao, J.; et al. 2025. Internvl3: Explor-
+ing advanced training and test-time recipes for open-source
+multimodal models. arXiv preprint arXiv:2504.10479.
+
+
+--- Page 10 ---
+        Appendix
+
+A Training Data Construction                                            pages and constructs an explicit evidence graph describing
+    Overview                                                            grounded evidence nodes, intermediate reasoning nodes, de-
+                                                                        pendency relations, and the final answer.
+         This section describes the construction of the supervision              Each generated evidence graph consists of four compo-
+        corpus used for both supervised fine-tuning (SFT) and Group     nents:
+        Relative Policy Optimization (GRPO). Starting from publicly
+            available LongDocVQA benchmarks and self-collected long           • Evidence Pages. The document page indices required for
+           documents, we automatically generate evidence page anno-     answering the question.
+          tations and structured evidence graphs through a teacher-              • Evidence Nodes. Grounded document elements support-
+       verifier pipeline. The resulting supervision corpus provides            ing the reasoning process. Each node corresponds to one
+     explicit annotations for evidence localization, evidence graph     parsed document block.
+    reasoning, and answer prediction.                                                   Nodes. Intermediate reasoning results obtained  • Derived
+    Data Source                                                         by composing one or multiple evidence nodes.
+        The training corpus is automatically constructed from three                                            edges that describe how    • Dependency Edges. Directed
+               publicly available LongDocVQA benchmarks, namely MP-           grounded evidence is progressively combined into higher-
+                 DocVQA, DUDE, and SlideVQA. We further augment the    level reasoning results until reaching the final answer.
+       training corpus with a self-collected set of long documents,           The resulting graph forms an executable directed acyclic
+        primarily consisting of publicly available arXiv papers and     graph (DAG), where every reasoning step remains explicitly
+         technical reports. While the documents in the public Long-     grounded in document evidence.
+             DocVQA benchmarks are generally shorter than 20 pages,            To ensure annotation quality, every generated sample is
+       the self-collected corpus includes substantially longer doc-     subsequently validated by an independent verifier MLLM
+           uments, with document lengths of up to 120 pages. We use     before being included in the final supervision corpus.
+         the original documents together with their question-answer
+        annotations for the public benchmarks as the starting point     Data Verification
+    for automatic evidence graph generation.                            Since evidence graphs are generated automatically, annota-
+    • MPDocVQA contains scanned multi-page documents                    tion quality is controlled through an independent verification
+            paired with visual question answering annotations. Most     stage.
+           questions require locating fine-grained textual evidence            For each generated sample, the verifier evaluates three
+           from one or several pages, making it well suited for su-     complementary aspects.
+            pervising evidence localization and document grounding.
+    • DUDE     extends document understanding to more chal-             Evidence Sufficiency. The verifier checks whether the pre-
+              lenging multi-page reasoning scenarios. Its documents     dicted evidence pages contain sufficient information to an-
+         exhibit diverse layouts, including forms, reports, tables,     swer the given question. Samples requiring additional unseen
+          and visually rich pages, requiring models to retrieve and     evidence are discarded.
+    integrate evidence distributed across multiple pages.               Logical Consistency.       The verifier examines whether every
+          • SlideVQA focuses on presentation slides containing fig-     reasoning step is logically supported by its predecessors and
+           ures, charts, diagrams, bullet lists, and sparse textual     whether the dependency graph forms a coherent reasoning
+             content. Since slide documents often follow non-linear     process without missing or contradictory intermediate nodes.
+           visual layouts rather than continuous textual flow, they
+              provide complementary supervision for multimodal rea-     Answer Correctness. Finally, the verifier independently
+    soning over heterogeneous document elements.                        derives the answer from the generated evidence graph and
+               • Self-Collected Long Documents consist primarily of     compares it with the reference answer. Samples with incon-
+             publicly available arXiv papers and technical reports.     sistent predictions are removed.
+                    Compared with the public LongDocVQA benchmarks,          Only samples satisfying all verification criteria are re-
+         these documents are substantially longer (up to 120 pages)     tained for subsequent SFT and GRPO training.
+            and exhibit rich cross-page dependencies, providing ad-
+          ditional supervision for long-range evidence localization     Data Statistics
+          and reasoning beyond the length range covered by existing     Tables 5 and 6 summarize the statistics of the constructed
+    benchmarks.                                                         supervision corpus.
+                                                                               We first report the composition of answerable and unan-
+    Automatic Evidence Graph Generation Pipeline                        swerable questions, together with the distribution of different
+              Given a document and a question, a teacher MLLM first     reasoning scenarios. We further present statistics of evidence
+         identifies the evidence pages required to answer the ques-     pages, including the average number of document pages and
+    tion. It then performs fine-grained reasoning over the selected     evidence pages per sample.
+
+
+--- Page 11 ---
+Stage 1 (Page Localiazation) Training Prompt
+
+    Top-level fields:
+    "images"     "<doc>/p0.png", #<image>
+
+    messages[0]  role
+   <task>page_localization</task>
+   [INSTRUCTION] Identify which pages contain evidence for the question. Output <evidence_pages>comma- separated page indices
+<fevidence_pages>, or
+      on what date is the presentation scheduled?
+   [PAGE 0 IMGJ<image>
+    [PAGE 1   IMGJ<image> one <image> per page (up to 120
+
+
+    messages[1]  role ="assistant":
+    <evidence_pages>0</evidence_pages>
+    (refusal    <evidence_pages>none</evidence_pages>)
+
+
+
+                     Stage 3 (Evidence Graph Reasoning) Trai
+    Top-level fields:        page     image(s)
+    “images"         Set-of-Marks
+
+    messages[0]      role ="user":
+    <task>bbox _refine_and_answer</task>
+    [INSTRUCTION]  Each evidence page is shown with every block outlined and labeled byblock id (e.g. p3_b7). Output <evidence_chain> of
+    <node rol   lata/derived> ending in exactly ONE derived node; then
+    <reasoning> and <answer>. If unanswerable, <answer>Not answerable</answer>.
+    [Q] Who is the sender?
+    [PAGE 0 IMG] <image>
+    [PAGE    0 BLOCKS]
+        “block  id=p0_b13, label=text,
+                 p0_b15, label=text, content="Mrs. Daniel L.
+
+
+    messages[1]      role "assistant":
+    <evidence_chain>
+    <node id="n1" role="data" dep:
+        <block_id>p0_b13</block_id>
+    <summary>The letter closes with 'Sincerely,'.</summary></node>
+    <node id="n3" role="derived"  deps="n,n2">
+        <summary>The sender is Mrs. Daniel L. Schiafly.</summary></node>
+    </evidence_chain>
+    <reasoning>Step 1 (n1): sign-off      Step 2 (n2): typed name below it. Step 3 (n3): 50 the sender is Mrs. D. L. Schiafly.</reasoning>
+    <answer>Mrs. Daniel L. Schiafly</answer>
+
+
+    Figure 5: Top: Prompts used for Stage 1 Page Localization Training. Bottom: Prompts used for Stage 3 Evidence Graph Reasoning
+    Training.
+
+
+            The resulting supervision corpus covers both answerable     Metric                     Value
+    and unanswerable settings, with diverse evidence localiza-                   Document Statistics
+    tion complexity ranging from single-page retrieval to cross-
+    page evidence composition.                                          Avg. document pages        26.1
+                                                                        Max. document pages         120
+                                                                                 Evidence Statistics
+    Task        Ans.     Irr.     D.A.      Total                       Avg. evidence pages / QA    1.4
+               17,102                                                   Max. evidence pages / QA    29
+    Stage 1  (71.2% SP)  1,001      -      18,103
+    Stage 3    15,998      -      2,718    18,716                      Table 6: Document and evidence statistics of the automati-
+             (73.4% SP)                                                cally constructed supervision corpus. Evidence pages denote
+    Total      33,100    1,001    2,718    36,819                      the pages required to answer a question.
+
+    Table 5: Composition of the two-stage training corpus. Irr.    B Additional Experimental Details
+    denotes irrelevant-page refusals, D.A. denotes detail-absent
+    refusals and SP indicates single-page questions.                   Implementation Details
+                                                                       To facilitate reproducibility, we provide additional imple-
+                                                                       mentation details beyond those reported in the main paper.
+
+
+--- Page 12 ---
+Parameter                         Value                                        Parameter               Value
+    Shared                                                                     Localization reward β    2.0
+Backbone                  Qwen3-VL-8B-Instruct                                 Stage 3 reward λ         0.3
+Training Precision                BF16                                         Answer reward α          0.5
+Optimizer                         AdamW                                        wh (Hit)                0.55
+LR Scheduler                     Cosine                                        wc (Completeness)       0.20
+Warmup Ratio                      0.05                                         ws (Structure)          0.15
+Gradient Clipping                  1.0                                         wt (Topology)           0.10
+DeepSpeed                        ZeRO-2
+FlashAttention                   Enabled                                 Table 8: Reward hyperparameters used during GRPO.
+Gradient Checkpointing           Enabled
+Training GPUs           16 × NVIDIA A800 (80 GB)                         GRPO checkpoint.
+    SFT
+Learning Rate                   5 × 10-6                                 Training Hyperparameters
+Epochs                              3                                    Table 7 summarizes the optimization hyperparameters used
+Max Sequence Length    32K (with sequence packing)                       throughout training. The reward hyperparameters for the
+Effective Batch Size                8                                    Stage 1 localization objective and the Stage 3 evidence graph
+Liger Kernel                     Enabled                                 optimization objective are reported separately in Table 8.
+    GRPO                                                                 GRPO Training Candidate Construction
+Learning Rate                   5 × 10-7                                 Directly applying GRPO to all training samples provides lim-
+Epochs                              2                                    ited learning signals, since samples that are always solved
+Group Size (G)                      8                                    correctly or consistently fail produce nearly zero relative ad-
+Rollout Temperature                0.8                                   vantage within each rollout group. We therefore construct
+Rollout Top-p                     0.95                                   informative GRPO training candidates through an offline
+Max Prompt Length                  32K                                   rollout procedure.
+Clip Range (ϵlow/ϵhigh)        0.2 / 0.28
+Effective Batch Size               24                                    Stage 1 Candidate Selection.  Starting from the joint SFT
+                                                                         checkpoint, we perform eight independent rollouts for every
+Table 7: Training hyperparameters of DocTrace.                           Stage 1 training sample. Samples that are solved correctly in
+                                                                         all eight rollouts or fail in all rollouts are discarded, since
+                                                                         they contribute little useful optimization signal. Only sam-
+                DocTrace is built upon Qwen3-VL-8B-Instruct and uses     ples with intermediate success rates (i.e., 1/8 to 7/8 correct
+full-parameter optimization throughout training. Unless oth-             predictions) are retained as Stage 1 GRPO training candi-
+erwise specified, all experiments are conducted on 16                    dates.
+NVIDIA A800 GPUs with BF16 mixed-precision training.                     Stage 3 Candidate Selection.  After Stage 1 GRPO con-
+FlashAttention-2 and gradient checkpointing are enabled for              verges, the resulting checkpoint is used to generate rollouts
+memory-efficient long-context training.                                  on the Stage 3 supervision corpus following the same pro-
+             Following the hierarchical design of DocTrace, training     cedure. Again, only samples with intermediate success rates
+consists of one SFT stage followed by two task-specific                  are retained for reinforcement learning.
+GRPO stages. During SFT, Stage 1 evidence localization                   To further improve training efficiency, we slightly adjust
+and Stage 3 evidence graph reasoning are jointly optimized               the sampling ratio of different reasoning scenarios according
+with a unified multi-task objective. Stage 1 uses document               to the performance of the SFT model. Categories that are
+images at a fixed resolution of 512, while Stage 3 processes             already well mastered (e.g., single-page answerable ques-
+the selected evidence pages at their native resolution of 1568           tions) are moderately downsampled, while more challenging
+for fine-grained evidence parsing and graph reasoning. Fig-              categories, including multi-page answerable questions and
+ure illustrates the prompts used for DocTrace training.                  detail-absent unanswerable questions, are upsampled. This
+              After SFT, reinforcement learning is performed sequen-     curriculum-style sampling strategy allocates more optimiza-
+tially. Stage 1 is first optimized with the localization reward,         tion effort to difficult reasoning behaviors that benefit most
+and the resulting checkpoint is then used to initialize Stage 3          from reinforcement learning.
+GRPO, where graph faithfulness and answer correctness are
+jointly optimized. The same resolution settings are used dur-    C Additional Ablation Study
+ing GRPO: 512 for Stage 1 and native 1568 for Stage 3. This
+sequential strategy allows graph reasoning to be optimized               The Impact of Set-of-Marks
+on top of improved evidence localization.                                We conduct an additional ablation experiment to study the
+            Unless otherwise specified, all experimental results re-     impact of the Set-of-Marks (SoM) representation in Stage 3.
+ported in the main paper are obtained from the final Stage 3             The default SoM setting provides visually grounded layout
+
+
+--- Page 13 ---
+    information by rendering block boundaries and identifiers          graph is acyclic, and (4) the final answer node is connected
+    on evidence pages, together with cropped visual regions for        to grounded evidence.
+    chart/figure blocks.                                                            Among 1,049 valid chains containing 3,122 evidence
+    We compare it with a textual bounding-box variant, where           nodes, 99.5% of cited block IDs are successfully grounded.
+    the original clean page image is used without visual anno-         The graph well-formedness, acyclicity, and answer connec-
+    tations. Instead, each block is represented by its block id,       tivity rates are 99.6%, 100.0%, and 100.0%, respectively,
+    semantic label, and normalized bounding-box coordinates            indicating that the generated traces are structurally reliable
+    in the prompt, while chart/figure crops are removed. All           and well grounded.
+    other components, including training data, supervision tar-
+    gets, backbone, and optimization settings, are kept identical      Evidence Localization
+    to the SoM baseline.                                               We evaluate whether the evidence used by the reasoning trace
+                                                                       corresponds to human-annotated evidence pages. For each
+    Setting                   QA Type             Acc                  answerable sample with non-empty evidence annotations, we
+                     Single    Multi    Unans.                         collect the pages referenced by evidence nodes and compute
+                                                                       macro-averaged precision, recall, and F1 against the ground-
+    DocTrace (SFT)    51.7     37.7      68.0     50.3                 truth evidence pages. We additionally compare the result with
+    w/o SoM           50.4     32.5      67.6     48.1                 the Stage 1 retrieved page set.
+                                                                               On 813 answerable samples, the reasoning trace achieves
+    ∆                 -1.3     -5.2      -0.4     -2.2                 P/R/F1 = 75.9/71.7/72.5, compared with an F1 score
+                                                                       of 72.2 for Stage 1 retrieval. This shows that the generated
+Table 9: Ablation study of SoM on MMLongBench-Doc.                     reasoning traces effectively consume the retrieved evidence.
+
+    The results are summarized in Table 9. The textual                 Causal Faithfulness
+    bounding-box variant consistently underperforms SoM, with          We further test whether the cited evidence is functionally nec-
+    an overall accuracy drop of 2.2 points (48.1 vs. 50.3), demon-     essary for the final prediction through counterfactual mask-
+    strating the benefit of explicit visual grounding for fine-        ing. For each sample, we compare two conditions:
+    grained evidence localization and document reasoning. The          • Cited         masking: mask the blocks referenced by the evi-
+    performance gap is primarily observed on multi-page ques-              dence graph.
+    tions, where the textual variant drops by 5.2 points (32.5         • Uncited masking: mask the             same number of grounded
+    vs. 37.7). In contrast, single-page questions show only a mi-          but uncited blocks as a placebo control.
+    nor degradation (50.4 vs. 51.7, -1.3), and unanswerable
+    questions remain nearly unchanged (67.6 vs. 68.0, -0.4),                  All other inputs remain unchanged. Among originally cor-
+    suggesting that SoM mainly benefits cross-page evidence in-        rect answerable samples with grounded evidence (n = 363),
+    tegration.                                                         319 samples satisfy the cited-masking control condition.
+    We attribute the larger gain on multi-page questions to            Masking cited evidence changes the answer in 82.8% of
+    the stronger spatial grounding provided by SoM. By render-         cases (264/319), whereas masking uncited evidence changes
+    ing layout blocks and their block ids directly on the page,        the answer in only 9.6% of cases (30/313). The substantial
+    SoM establishes an explicit visual correspondence between          gap indicates that the evidence identified by the graph is
+    reasoning steps and document regions. In comparison, the           functionally important for the final prediction.
+    textual variant requires the model to recover the same spatial
+    relationships from normalized coordinates, which is more           Limitation
+    challenging for cross-page reasoning.                              This evaluation measures behavioral dependence through in-
+                                                                       put perturbation. It does not establish that the model inter-
+         D Detailed Traceability Analysis                              nally follows the explicit evidence graph; rather, it shows that
+    This section provides the evaluation details for the trace-        the cited evidence is functionally important for the model's
+    ability results reported in Table 3 of the main paper. We          prediction.
+    evaluate traceability from three complementary perspectives:
+    provenance integrity, evidence localization, and causal faith-    E Efficiency Analysis
+    fulness. Only samples that successfully reach Stage 3 and          We compare the inference efficiency of DocTrace with
+    produce a valid evidence chain are included in graph-based         the  end-to-end                Qwen3-VL-8B baseline on the full
+    evaluations.                                                       MMLongBench-Doc benchmark. Both methods are evalu-
+                                                                       ated on identical hardware with batch size 1. The end-to-end
+    Provenance Integrity                                               baseline processes all document pages at 1024 px in a sin-
+    We verify the structural validity and grounding of each gener-     gle forward pass, whereas DocTrace first localizes evidence
+    ated evidence graph using deterministic rules without model        using a Stage 1 scan at 512 px, parses the retrieved pages
+    calls. Specifically, we check whether (1) all cited block IDs      in Stage 2, and performs fine-grained reasoning over the re-
+    exist in the Stage 2 layout inventory, (2) all dependency ref-     trieved evidence pages at their native resolution of 1568 px
+    erences are valid and every derived node has parents, (3) the      in Stage 3.
+
+
+--- Page 14 ---
+               Table 10 shows that DocTrace is both more accurate and    Length (pages)                     n 512 1024         1568     2048
+    more efficient than the end-to-end baseline. It improves ac-              256K context
+    curacy from 38.5 to 52.9 (+14.4 points), while reducing end-           0-80           954            0.0      0.0           0.0     0.0
+    to-end latency by 2.1× (15.04 s to 7.33 s) and prefill tokens        80-120                    81    0.0      0.0           0.0     79.0
+    by 2.3× (35.5K to 15.5K). The efficiency gain comes from             120+                      56    0.0      8.9         100.0     100.0
+    the hierarchical design: Stage 1 performs a lightweight scan
+    over all document pages using compact 512 px inputs, while                128K context
+    Stage 3 applies high-resolution reasoning only to the re-              0-40           665            0.0      0.0           0.0     0.0
+    trieved evidence pages. As a result, DocTrace concentrates                40-60       153            0.0      0.0           0.0     51.6
+    computation on pages where fine-grained visual reasoning is               60-80       136            0.0      0.0          52.9     90.4
+    required, rather than processing every page at high resolu-          80-120                    81    0.0      0.0         100.0     100.0
+    tion.                                                                120+                      56    0.0      85.7        100.0     100.0
+
+    Method               ACC E2E latency (s)    Prefill tok.                   Table 11: Context-overflow rate (%) on MMLongBench-Doc
+    Qwen3-VL-8B (E2E)    38.5     15.04            35,543                    under different page resolutions and context-window sizes.
+    DocTrace             52.9     7.33             15,481
+    Stage 1 (512 px)       -      1.67              9,269                These results directly motivate the hierarchical design of
+    Stage 2 (OCR)          -      0.28                -                       DocTrace. Stage 1 uses 512 px page images to localize ev-
+    Stage 3 (1568 px)      -      5.38              6,212                     idence over the entire document without context overflow,
+    Table 10: Efficiency comparison on MMLongBench-Doc.                      while Stage 3 revisits only the retrieved evidence pages at
+    Prefill tokens include both visual and text tokens.                      1568 px for fine-grained reasoning. This coarse-to-fine de-
+                                                                              sign enables high-resolution document understanding with-
+                                                                         out sacrificing scalability.
+
+F Motivation for Hierarchical Inference                                                      G Stage-wise Error Analysis
+    DocTrace adopts a coarse-to-fine inference strategy: Stage 1            To better understand the remaining errors of DocTrace, we at-
+    performs evidence localization over the entire document us-           tribute prediction failures to different stages of the pipeline.
+    ing low-resolution page images (512 px), while Stage 3 re-                 We analyze answerable and unanswerable questions sepa-
+    visits only the retrieved evidence pages at high resolution               rately. For answerable questions, we study whether errors
+    (1568 px) for fine-grained reasoning. This design is moti-              arise from incomplete evidence localization (Stage 1) or rea-
+    vated by a fundamental limitation of end-to end inference:               soning over retrieved evidence (Stage 3). For unanswerable
+    processing every page at high resolution rapidly exhausts              questions, we analyze how hallucinations relate to the Stage 1
+    the visual context budget of current MLLMs. To quantify              answerability decision and retrieved distractor pages.
+    this limitation, we analyze the context-overflow rate under          Table 12 shows that Stage 3 generalizes well once the re-
+    different page resolutions and document lengths.                         quired evidence has been retrieved. When all gold evidence
+              For a page rendered at long-edge resolution R, Qwen3-VL         pages are available, single-page and multi-page questions
+    produces tR(p) = ⌊WR(p)HR(p)/1024⌋ + 8 visual tokens,                   achieve nearly identical accuracy (61.7 vs. 60.2), indicating
+    where both image dimensions are rounded to multiples of 32.           that reasoning itself is not the primary limitation. The overall
+    A document overflows whenever the total visual and textual               performance gap (52.6 vs. 40.0) is instead explained by the
+    tokens exceed the available context window:                               much lower Stage 1 coverage on multi-page questions (46.5
+                                                                            vs. 78.3). Moreover, partial retrieval remains substantially
+    X     tR(p) + Ttext > C - Mgen - S,                           (4)      better than retrieving no evidence (26.7 vs. 11.2), suggesting
+    p                                                                       that Stage 3 effectively exploits whatever evidence is avail-
+                 where C ∈ {256K, 128K} is the context window, Mgen =         able. Overall, the performance degradation on multi-page
+    2048 reserves generation tokens, S = 64 is a safety margin,              questions is primarily caused by incomplete evidence local-
+    and Ttext = 512 denotes the textual prompt budget. The token         ization.
+    accounting is identical to that used during inference. Table 11
+    reports the resulting overflow rates on MMLongBench-Doc.               Type     n      Cov.          Full     None    Part.    Overall
+            Table 11 reveals that the overflow rate increases sharply    Single    475     78.3          61.7     20.0      -           52.6
+    with page resolution. Under the 256K setting, 2048 px al-
+    ready overflows for 79.0% of 80-120-page documents and                Multi    355     46.5          60.2     11.2    26.7          40.0
+    for all documents longer than 120 pages, while 1568 px
+    also reaches a 100% overflow rate beyond 120 pages. Un-                   Table 12: Performance by retrieval completeness. Cov. de-
+    der the more common 128K deployment, the limitation be-                  notes Stage 1 coverage (Recall = 1). Full, None, and Part.
+    comes even more severe: 2048 px starts to overflow at 40-60               denote the answer accuracy when all, none, or part of the
+    pages, and 1568 px overflows for all documents longer than           gold evidence pages are retrieved, respectively.
+    80 pages. In contrast, 512 px never overflows under either
+    setting.                                                             Table 13 attributes hallucinations to Stage 1. All hallu-
+
+
+--- Page 15 ---
+    cinations originate from questions that Stage 1 incorrectly               For DocTrace and the Qwen3-VL-8B-Instruct backbone,
+    admits as answerable. Whenever Stage 1 correctly rejects an               all experiments are conducted by ourselves following the
+    unanswerable question, hallucination never occurs.                        official evaluation scripts and protocols released by each
+                  Although Stage 3 recovers 66.8% of the wrongly admitted     benchmark. Specifically, we strictly follow the official eval-
+    cases by predicting a refusal, it cannot completely eliminate             uation procedures of MMLongBench-Doc, LongDocURL,
+    the errors. Furthermore, hallucination increases monotoni-                and SlideVQA without introducing any task-specific modifi-
+    cally with the number of retrieved distractor pages (0.0%,                cations, ensuring reproducible and fair comparisons.
+    28.8%, 39.7%, and 44.4%), indicating that irrelevant re-
+    trieved pages make the downstream model increasingly likely               End-to-End MLLMs
+    to generate unsupported answers.                                          End-to-end MLLMs directly process the complete document
+    Setting                               n    Halluc. (%)                    without performing explicit evidence retrieval or interme-
+                                                                              diate page selection. Evidence localization and multi-page
+    Stage-1 decision                                                          reasoning are implicitly handled within the model's long-
+    Rejected                             24        0.0                        context representations, making these approaches heavily
+    Accepted                             220      33.2                        dependent on large context windows and strong multimodal
+         Recovered (Stage 3 refused)     147       0.0                        reasoning capability.
+         Not recovered (hallucinated)    73       100.0                       We compare against representative end-to-end document
+    Retrieved pages                                                           understanding models, including mPLUG-DocOwl2, Do-
+    0                                    24        0.0                        copilot, InternVL3, and DocSeeker.
+    1                                    139      28.8
+    2                                    63       39.7                        mPLUG-DocOwl2 mPLUG-DocOwl2 is an OCR-free
+    ≥ 3                                  18       44.4                        document understanding model that directly aligns document
+                                                                              images with a large language model through a dedicated vi-
+    Overall                              244      29.9                        sual abstraction module. By learning unified visual-text rep-
+                                                                              resentations via large-scale instruction tuning, it performs
+    Table 13: Hallucination analysis on unanswerable questions.               document reasoning without relying on external OCR sys-
+    Within the Accepted subset, we further break down outcomes                tems.
+    into cases where Stage 3 recovers by predicting a refusal
+    versus cases that result in a hallucinated answer.                        Docopilot  Docopilot follows a retrieval-free paradigm that
+                                                                              directly processes complete document images within a single
+               Both analyses consistently identify Stage 1 as the primary     multimodal model. It combines efficient long-context atten-
+    bottleneck of DocTrace. For answerable questions, the per-                tion mechanisms with multimodal data packing, enabling
+    formance gap on multi-page reasoning is mainly caused by                  high-resolution document understanding while avoiding ex-
+    incomplete evidence localization rather than reasoning er-                plicit evidence retrieval.
+    rors. For unanswerable questions, hallucinations originate
+    from incorrect Stage 1 answerability decisions and become                 InternVL3 InternVL3 is a general-purpose multimodal
+    more frequent as more distractor pages are retrieved. These               large language model featuring native multimodal pre-
+    findings suggest that improving Stage 1 retrieval recall and              training and strong OCR capability. Efficient visual position
+    answerability prediction is likely to provide the largest overall         encoding together with advanced post-training strategies en-
+    performance gain.                                                         ables competitive long-context document understanding per-
+                                                                              formance across diverse multimodal benchmarks.
+H Baseline Details                                                            DocSeeker DocSeeker emphasizes structured visual rea-
+    Evaluation Protocol                                                       soning and evidence grounding for long document under-
+    This section provides additional details of the compared base-            standing. It exploits layout-aware document representations
+    lines and clarifies the evaluation protocol adopted in our ex-            to improve evidence localization and cross-page reasoning
+    periments.                                                                while maintaining an end-to-end inference framework.
+                          For MMLongBench-Doc, the performance of propri-
+    etary MLLMs, including GPT-4.1, GPT-4o, Claude-3.7-                       Retrieval-Augmented Methods
+    Sonnet, and Gemini-1.5-Pro, is directly taken from the of-
+    ficial MMLongBench-Doc leaderboard. These models are                      Retrieval-augmented methods first retrieve a subset of rel-
+    evaluated under the unified protocol provided by the bench-               evant document pages or visual regions before performing
+    mark, ensuring fair comparison across different proprietary               answer generation. By restricting expensive multimodal rea-
+    systems.                                                                  soning to retrieved evidence only, these approaches substan-
+                  For the remaining baseline methods, including represen-     tially improve inference efficiency compared with processing
+    tative end-to-end MLLMs, retrieval-augmented approaches,                  the complete document.
+    and agent-based methods, we report the results published in               Our comparison includes representative visual re-
+    their original papers whenever they are evaluated on the same             trieval methods, namely M3DocRAG, VisRAG, SV-RAG,
+    benchmark.                                                                VDocRAG, MoLoRAG, and URaG.
+
+
+--- Page 16 ---
+M3DocRAG M3DocRAG formulates long document un-                     policies that iteratively retrieve and aggregate evidence
+derstanding as a retrieval-augmented generation problem. It        before answer generation.
+retrieves relevant document pages through multimodal re-                   Although these agent-based approaches expose interme-
+trieval and performs answer generation only on the selected        diate interaction trajectories, their reasoning processes re-
+evidence, reducing the reasoning space for long documents.         main action-oriented. In contrast, DocTrace explicitly orga-
+VisRAG VisRAG performs retrieval directly in the visual            nizes grounded document evidence into executable evidence
+domain by representing document pages as images rather             graphs, allowing every intermediate reasoning step to be
+than OCR text. It employs a dual-encoder retriever to identify     directly traced back to supporting document evidence and
+relevant pages, followed by a vision-language model that           providing explicit node-level provenance.
+generates answers from the retrieved visual evidence.
+SV-RAG SV-RAG unifies retrieval and answer generation
+within a single multimodal backbone using two specialized
+LoRA adapters. One adapter is optimized for evidence re-
+trieval through contrastive learning, while the other performs
+autoregressive answer generation.
+VDocRAG VDocRAG is designed for visually rich doc-
+uments by learning dense visual representations for page
+retrieval. Retrieved page images are then passed to a mul-
+timodal generator for answer prediction, avoiding explicit
+conversion of document pages into textual representations.
+MoLoRAG MoLoRAG introduces logic-aware multi-
+modal retrieval that explicitly considers reasoning depen-
+dencies during evidence selection. By jointly modeling re-
+trieval and logical relevance, it improves evidence quality for
+complex multi-page reasoning.
+URaG URaG proposes a unified retrieval-generation
+framework that jointly optimizes evidence retrieval and an-
+swer generation within a single training objective, enabling
+more effective interaction between retrieval and reasoning.
+
+Agent-based Methods
+Agent-based methods formulate long document understand-
+ing as an interactive decision-making process. Instead of
+processing all document pages simultaneously, the model it-
+eratively explores the document through search, navigation,
+or perception actions, progressively collecting evidence be-
+fore generating the final answer.
+We compare against representative document agents, in-
+cluding VRAG-RL, Doc-V*, and MM-Doc-R1.
+VRAG-RL VRAG-RL formulates long document reason-
+ing as a sequential decision-making problem. During in-
+ference, the agent alternates between reasoning and visual
+perception actions to progressively collect evidence from the
+document. The policy is optimized using GRPO with rewards
+encouraging both accurate retrieval and correct answer pre-
+diction.
+Doc-V* Doc-V* adopts a coarse-to-fine interactive reason-
+ing strategy for multi-page document understanding. The
+agent progressively narrows the search space through iter-
+ative exploration and evidence inspection before producing
+the final answer.
+MM-Doc-R1 MM-Doc-R1 trains     document                     agents
+through reinforcement learning for long document visual
+question answering. Rather than relying solely on super-
+vised instruction tuning, it optimizes multi-turn interaction

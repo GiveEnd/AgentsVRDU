@@ -1,0 +1,2501 @@
+{
+  "total_pages": 2,
+  "pages": [
+    {
+      "page": 1,
+      "width": 595.0,
+      "height": 842.0,
+      "text": "DeepSeek Harness Docker\n\n B      |\n\n upstream DSH        container release    docker.io                           harness\n©) ohcrio runzhliu/deepseek-hamess | | SkillHub    | | (® Node.js  24| |  license MIT\n\n     DeepSeek Harness                                                         BJ Web Ul,\n{£3 DeepSeek Harness        npm        3E                          root   A Node.js 24 E1784,\n\n\n\n\n 0.2.1-alpha.1 BERNER 2.1-a1 Release 5 npm Registry £9\n     ,        npm\n     Docker    1atest 17%,\n\n     npm     ;     Registry  disttag                                      BR\ndist-tag      0.2.1-alpha.1     FELL Claude Code Mods              Agent    Markdown\nfrontmatter we --public-url    BASE,                                        HUES.\nBRE",
+      "text_items": [
+        {
+          "text": "DeepSeek Harness Docker",
+          "x": 17.279999,
+          "y": 139.68,
+          "width": 273.12,
+          "height": 20.64,
+          "font_name": "OCR",
+          "font_size": 20.64,
+          "confidence": 0.894
+        },
+        {
+          "text": "B",
+          "x": 19.199999,
+          "y": 186.72,
+          "width": 2.3999999,
+          "height": 0.48,
+          "font_name": "OCR",
+          "font_size": 0.48,
+          "confidence": 0.453
+        },
+        {
+          "text": "|",
+          "x": 55.68,
+          "y": 183.36,
+          "width": 0.96,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.94
+        },
+        {
+          "text": "upstream",
+          "x": 20.64,
+          "y": 211.2,
+          "width": 35.52,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.966
+        },
+        {
+          "text": "DSH",
+          "x": 59.52,
+          "y": 210.72,
+          "width": 15.36,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.788
+        },
+        {
+          "text": "container release",
+          "x": 164.64,
+          "y": 210.72,
+          "width": 63.36,
+          "height": 5.7599945,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.517
+        },
+        {
+          "text": "docker.io",
+          "x": 336.0,
+          "y": 210.72,
+          "width": 33.6,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.805
+        },
+        {
+          "text": "harness",
+          "x": 448.8,
+          "y": 205.44,
+          "width": 30.24,
+          "height": 14.88,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.451
+        },
+        {
+          "text": "©)",
+          "x": 17.76,
+          "y": 225.12,
+          "width": 10.08,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.44
+        },
+        {
+          "text": "ohcrio",
+          "x": 32.16,
+          "y": 228.95999,
+          "width": 24.48,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.595
+        },
+        {
+          "text": "runzhliu/deepseek-hamess",
+          "x": 62.879997,
+          "y": 228.48,
+          "width": 100.32,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.583
+        },
+        {
+          "text": "|",
+          "x": 165.59999,
+          "y": 225.12,
+          "width": 1.4399999,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.593
+        },
+        {
+          "text": "|",
+          "x": 169.92,
+          "y": 225.12,
+          "width": 2.3999999,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.808
+        },
+        {
+          "text": "SkillHub",
+          "x": 174.72,
+          "y": 228.95999,
+          "width": 29.76,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.812
+        },
+        {
+          "text": "|",
+          "x": 310.08,
+          "y": 225.12,
+          "width": 1.4399999,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.693
+        },
+        {
+          "text": "|",
+          "x": 313.44,
+          "y": 225.12,
+          "width": 2.3999999,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.426
+        },
+        {
+          "text": "(®",
+          "x": 317.75998,
+          "y": 225.12,
+          "width": 7.2,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.426
+        },
+        {
+          "text": "Node.js",
+          "x": 329.75998,
+          "y": 228.95999,
+          "width": 26.88,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.468
+        },
+        {
+          "text": "24",
+          "x": 362.88,
+          "y": 228.95999,
+          "width": 8.16,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.563
+        },
+        {
+          "text": "| |",
+          "x": 372.47998,
+          "y": 225.12,
+          "width": 7.200012,
+          "height": 13.440002,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.563
+        },
+        {
+          "text": "license",
+          "x": 383.52,
+          "y": 228.95999,
+          "width": 24.0,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.798
+        },
+        {
+          "text": "MIT",
+          "x": 413.75998,
+          "y": 228.95999,
+          "width": 14.4,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.93
+        },
+        {
+          "text": "DeepSeek Harness",
+          "x": 128.16,
+          "y": 257.75998,
+          "width": 92.639984,
+          "height": 10.079987,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.902
+        },
+        {
+          "text": "BJ Web Ul,",
+          "x": 468.0,
+          "y": 256.8,
+          "width": 51.839966,
+          "height": 10.559998,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.643
+        },
+        {
+          "text": "{£3 DeepSeek Harness",
+          "x": 16.32,
+          "y": 273.12,
+          "width": 118.079994,
+          "height": 11.039978,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.352
+        },
+        {
+          "text": "npm",
+          "x": 217.44,
+          "y": 276.0,
+          "width": 19.68,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.92
+        },
+        {
+          "text": "3E",
+          "x": 349.91998,
+          "y": 273.12,
+          "width": 9.599999,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.756
+        },
+        {
+          "text": "root",
+          "x": 363.84,
+          "y": 275.04,
+          "width": 17.76,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.968
+        },
+        {
+          "text": "A Node.js 24 E1784,",
+          "x": 385.44,
+          "y": 272.63998,
+          "width": 102.71997,
+          "height": 11.519989,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.338
+        },
+        {
+          "text": "0.2.1-alpha.1",
+          "x": 20.16,
+          "y": 347.03998,
+          "width": 70.56,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.423
+        },
+        {
+          "text": "BERNER",
+          "x": 98.88,
+          "y": 343.19998,
+          "width": 63.84,
+          "height": 10.559999,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.33
+        },
+        {
+          "text": "2.1-a1",
+          "x": 210.23999,
+          "y": 354.72,
+          "width": 30.72,
+          "height": 0.48,
+          "font_name": "OCR",
+          "font_size": 0.48,
+          "confidence": 0.788
+        },
+        {
+          "text": "Release 5",
+          "x": 276.96,
+          "y": 343.19998,
+          "width": 52.320007,
+          "height": 10.559998,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.969
+        },
+        {
+          "text": "npm",
+          "x": 333.6,
+          "y": 346.56,
+          "width": 19.68,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.906
+        },
+        {
+          "text": "Registry £9",
+          "x": 357.6,
+          "y": 343.68,
+          "width": 52.319977,
+          "height": 11.039978,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.953
+        },
+        {
+          "text": ",",
+          "x": 60.48,
+          "y": 367.19998,
+          "width": 1.4399999,
+          "height": 3.36,
+          "font_name": "OCR",
+          "font_size": 3.36,
+          "confidence": 0.401
+        },
+        {
+          "text": "npm",
+          "x": 246.23999,
+          "y": 363.36,
+          "width": 19.68,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.726
+        },
+        {
+          "text": "Docker",
+          "x": 95.52,
+          "y": 377.75998,
+          "width": 33.6,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.922
+        },
+        {
+          "text": "1atest",
+          "x": 136.8,
+          "y": 379.68,
+          "width": 31.199999,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.831
+        },
+        {
+          "text": "17%,",
+          "x": 176.16,
+          "y": 376.8,
+          "width": 24.96,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.556
+        },
+        {
+          "text": "npm",
+          "x": 139.2,
+          "y": 407.52,
+          "width": 19.199999,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.905
+        },
+        {
+          "text": ";",
+          "x": 188.64,
+          "y": 405.6,
+          "width": 1.92,
+          "height": 9.12,
+          "font_name": "OCR",
+          "font_size": 9.12,
+          "confidence": 0.915
+        },
+        {
+          "text": "Registry",
+          "x": 195.84,
+          "y": 405.6,
+          "width": 38.879997,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.919
+        },
+        {
+          "text": "disttag",
+          "x": 273.6,
+          "y": 405.6,
+          "width": 34.559998,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.81
+        },
+        {
+          "text": "BR",
+          "x": 551.04,
+          "y": 404.16,
+          "width": 20.16,
+          "height": 10.559999,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.875
+        },
+        {
+          "text": "dist-tag",
+          "x": 16.32,
+          "y": 421.91998,
+          "width": 34.559998,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.835
+        },
+        {
+          "text": "0.2.1-alpha.1",
+          "x": 91.2,
+          "y": 423.84,
+          "width": 71.04,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.441
+        },
+        {
+          "text": "FELL Claude Code Mods",
+          "x": 169.92,
+          "y": 420.47998,
+          "width": 149.27998,
+          "height": 10.559998,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.345
+        },
+        {
+          "text": "Agent",
+          "x": 366.24,
+          "y": 421.91998,
+          "width": 27.84,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.924
+        },
+        {
+          "text": "Markdown",
+          "x": 528.0,
+          "y": 421.44,
+          "width": 48.48,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.968
+        },
+        {
+          "text": "frontmatter",
+          "x": 16.32,
+          "y": 437.75998,
+          "width": 51.84,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.901
+        },
+        {
+          "text": "we",
+          "x": 83.52,
+          "y": 437.28,
+          "width": 8.639999,
+          "height": 3.36,
+          "font_name": "OCR",
+          "font_size": 3.36,
+          "confidence": 0.802
+        },
+        {
+          "text": "--public-url",
+          "x": 109.439995,
+          "y": 439.68,
+          "width": 63.84,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.832
+        },
+        {
+          "text": "BASE,",
+          "x": 260.16,
+          "y": 436.8,
+          "width": 43.2,
+          "height": 10.559999,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.556
+        },
+        {
+          "text": "HUES.",
+          "x": 397.91998,
+          "y": 436.8,
+          "width": 46.559998,
+          "height": 10.559999,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.649
+        },
+        {
+          "text": "BRE",
+          "x": 14.88,
+          "y": 451.19998,
+          "width": 19.68,
+          "height": 17.76,
+          "font_name": "OCR",
+          "font_size": 17.76,
+          "confidence": 0.311
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "width": 595.0,
+      "height": 842.0,
+      "text": "D Annotation Examples\n\nIn this section, we present 6 annotation examples that illustrate typical multimodal reasoning and\nintegration patterns, which help clarify the construction and use of MMDocRAG. Each annotation\nincludes the following components: question, short answer, a set of noisy image and text quotes,\ngold quotes, and the final multimodal answer. These examples frequently require reasoning across\nmultiple pages and modalities. The image quotes encompass diverse formats such as figures, charts,\ntables, and infographics, highlighting the complexity and richness of the multimodal reasoning tasks.\n\n\n    Question:\n    What percentage of the largest demographic segment of respondents reported not conducting promotions to\n\nGold quotes: imaged’)\n    Multimodal answer:\n    The question asks for the parcantage of respondents from the second largest demographic segment who reported not conducting\n    promotions ta customers over Wi-Fi in 2015.\n    To determine this, we nead to analyze the data provided in the figures:\n    1   Figure 1: This figure shows tha segments of respondents by thair industry The segments ara:\n        o  General Merchandise & Specialty: 63%\n           Hospitality: 23%\n           Food, Drug, Conv, Mass: 14%\n\n     From this information, the second largest segment is “Hospitality” at 23%\n   2 Figure 2: This figure provides insights into the responses categorized as \"Yes\" or \"No\" for conducting promotions over Wi-Fi,\n     Far the Hospitality segment:\n\n           Yes: 15%\n\n      o No: 85%\n Combining this information, the second largest demographic segment (Hospitality) repoded that 85% of respondents did not\n conduct promotions to customers over Wi-Fi in 2015. This matches the short answer provided.\n        oe\n\n\n\n\n\n\n\n\n\n\n            text’; ‘Differentiated                                               13,            47},\n                                   the playing field on     information Up       sel! op                       to\n                         \"Leveling\n                         \"Survey                                                                              al                               148},\n            ,                   Respondents by Segment applied to                      average retaller sizes per                             -\n            ,    text’: \"Wi-Fi VendorS slection Criteria,      14,                              50},\n                                                          *,     8, layout id:\n            |                tent”: ‘Respondent Demographics                                34},\n        \"tend\": \"Provides customers with a full understanding of bandwidth usage a. ‘pags 32,br\n            ,  teat’:    \"How does   Wi    Fi lenditself        Loyalty          and    what     type of  \"page.|    id’: 35,    ut_id:       123},\n            ,                                                                                                 id\"     135},\n            \"text\":      What if    your Wi-Fi      could feed this information into    your     ,            22,     1ayout_ id: 90},\n                               if your     Wi-Fi                                        your Pos...\n           ext,          \"What                      could feed this information into            Pos,CRM       21,     Tayout    id: 80},\n    \"type\". text, ‘text:    'Are you  doing promotions     to customers overWi-Fi?%',                         13,      48},\n                                  if      Wi-Fi     could feed\n                                   What\n                                   your                                       informason                      page id\": 20, layout 71},\n                   text’    'Data analytics realtime     this                       info    your          a..                      ii\"\n    type\"   text, ‘text:                             access to a single view          of    data, information..”,    ‘page     30, layout_if: 118",
+      "text_items": [
+        {
+          "text": "D",
+          "x": 28.8,
+          "y": 22.08,
+          "width": 12.0,
+          "height": 12.0,
+          "font_name": "OCR",
+          "font_size": 12.0,
+          "confidence": 0.925
+        },
+        {
+          "text": "Annotation Examples",
+          "x": 57.12,
+          "y": 21.6,
+          "width": 156.48001,
+          "height": 15.839998,
+          "font_name": "OCR",
+          "font_size": 12.48,
+          "confidence": 0.819
+        },
+        {
+          "text": "In this section,",
+          "x": 29.279999,
+          "y": 56.64,
+          "width": 83.04,
+          "height": 11.519997,
+          "font_name": "OCR",
+          "font_size": 9.599999,
+          "confidence": 0.967
+        },
+        {
+          "text": "we",
+          "x": 117.119995,
+          "y": 60.0,
+          "width": 15.36,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.969
+        },
+        {
+          "text": "present",
+          "x": 137.28,
+          "y": 59.039997,
+          "width": 40.8,
+          "height": 11.04,
+          "font_name": "OCR",
+          "font_size": 11.04,
+          "confidence": 0.969
+        },
+        {
+          "text": "6 annotation examples that illustrate typical multimodal reasoning and",
+          "x": 182.4,
+          "y": 56.64,
+          "width": 404.63998,
+          "height": 13.440002,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.969
+        },
+        {
+          "text": "integration",
+          "x": 29.279999,
+          "y": 72.479996,
+          "width": 60.48,
+          "height": 12.96,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.967
+        },
+        {
+          "text": "patterns,",
+          "x": 96.0,
+          "y": 73.92,
+          "width": 47.52,
+          "height": 11.5199995,
+          "font_name": "OCR",
+          "font_size": 11.5199995,
+          "confidence": 0.967
+        },
+        {
+          "text": "which help clarify the construction and",
+          "x": 149.76,
+          "y": 72.0,
+          "width": 229.43999,
+          "height": 13.440002,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.963
+        },
+        {
+          "text": "use",
+          "x": 384.47998,
+          "y": 75.36,
+          "width": 18.72,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.969
+        },
+        {
+          "text": "of",
+          "x": 408.0,
+          "y": 72.0,
+          "width": 12.96,
+          "height": 10.559999,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.933
+        },
+        {
+          "text": "MMDocRAG.",
+          "x": 425.75998,
+          "y": 72.96,
+          "width": 60.96,
+          "height": 9.599999,
+          "font_name": "OCR",
+          "font_size": 9.599999,
+          "confidence": 0.916
+        },
+        {
+          "text": "Each annotation",
+          "x": 493.44,
+          "y": 72.479996,
+          "width": 93.119995,
+          "height": 10.080002,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.969
+        },
+        {
+          "text": "includes the",
+          "x": 29.279999,
+          "y": 87.84,
+          "width": 67.68,
+          "height": 10.080002,
+          "font_name": "OCR",
+          "font_size": 9.599999,
+          "confidence": 0.968
+        },
+        {
+          "text": "following",
+          "x": 102.72,
+          "y": 87.84,
+          "width": 54.239998,
+          "height": 12.96,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.957
+        },
+        {
+          "text": "components:",
+          "x": 161.28,
+          "y": 89.759995,
+          "width": 72.479996,
+          "height": 11.5199995,
+          "font_name": "OCR",
+          "font_size": 11.5199995,
+          "confidence": 0.957
+        },
+        {
+          "text": "question,",
+          "x": 240.0,
+          "y": 87.84,
+          "width": 51.36,
+          "height": 13.44,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.966
+        },
+        {
+          "text": "short",
+          "x": 297.12,
+          "y": 87.84,
+          "width": 28.32,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.966
+        },
+        {
+          "text": "answer, a",
+          "x": 328.8,
+          "y": 90.72,
+          "width": 54.72,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.961
+        },
+        {
+          "text": "set",
+          "x": 387.36,
+          "y": 89.759995,
+          "width": 15.36,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.965
+        },
+        {
+          "text": "of noisy image and",
+          "x": 407.52,
+          "y": 87.84,
+          "width": 109.92001,
+          "height": 12.959999,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.967
+        },
+        {
+          "text": "text quotes,",
+          "x": 522.72,
+          "y": 90.24,
+          "width": 64.80005,
+          "height": 11.040001,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.967
+        },
+        {
+          "text": "gold",
+          "x": 28.8,
+          "y": 103.2,
+          "width": 24.48,
+          "height": 12.96,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.969
+        },
+        {
+          "text": "quotes, and the",
+          "x": 57.12,
+          "y": 103.68,
+          "width": 85.44,
+          "height": 12.959991,
+          "font_name": "OCR",
+          "font_size": 11.5199995,
+          "confidence": 0.708
+        },
+        {
+          "text": "final multimodal",
+          "x": 147.36,
+          "y": 103.2,
+          "width": 93.11998,
+          "height": 10.080002,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.968
+        },
+        {
+          "text": "answer.",
+          "x": 245.28,
+          "y": 106.56,
+          "width": 41.28,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.963
+        },
+        {
+          "text": "These examples frequently require reasoning",
+          "x": 291.84,
+          "y": 103.2,
+          "width": 255.35995,
+          "height": 13.440002,
+          "font_name": "OCR",
+          "font_size": 9.599999,
+          "confidence": 0.964
+        },
+        {
+          "text": "across",
+          "x": 552.0,
+          "y": 106.56,
+          "width": 34.079998,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.954
+        },
+        {
+          "text": "multiple",
+          "x": 29.279999,
+          "y": 118.079994,
+          "width": 45.6,
+          "height": 12.96,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.965
+        },
+        {
+          "text": "pages",
+          "x": 79.68,
+          "y": 120.96,
+          "width": 30.24,
+          "height": 10.08,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.959
+        },
+        {
+          "text": "and modalities.",
+          "x": 114.24,
+          "y": 118.079994,
+          "width": 84.47999,
+          "height": 10.079994,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.952
+        },
+        {
+          "text": "The image",
+          "x": 204.0,
+          "y": 118.079994,
+          "width": 59.04001,
+          "height": 12.959999,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.968
+        },
+        {
+          "text": "quotes encompass",
+          "x": 267.36,
+          "y": 120.0,
+          "width": 101.28,
+          "height": 11.039993,
+          "font_name": "OCR",
+          "font_size": 11.04,
+          "confidence": 0.966
+        },
+        {
+          "text": "diverse formats such",
+          "x": 372.47998,
+          "y": 118.079994,
+          "width": 114.72003,
+          "height": 10.079994,
+          "font_name": "OCR",
+          "font_size": 10.08,
+          "confidence": 0.955
+        },
+        {
+          "text": "as",
+          "x": 491.52,
+          "y": 120.96,
+          "width": 11.04,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.966
+        },
+        {
+          "text": "figures, charts,",
+          "x": 506.4,
+          "y": 117.6,
+          "width": 81.119965,
+          "height": 13.439995,
+          "font_name": "OCR",
+          "font_size": 13.44,
+          "confidence": 0.961
+        },
+        {
+          "text": "tables, and infographics, highlighting the complexity and richness of the multimodal reasoning tasks.",
+          "x": 29.279999,
+          "y": 133.44,
+          "width": 558.72,
+          "height": 13.440002,
+          "font_name": "OCR",
+          "font_size": 10.559999,
+          "confidence": 0.926
+        },
+        {
+          "text": "Question:",
+          "x": 34.079998,
+          "y": 169.44,
+          "width": 41.76,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.838
+        },
+        {
+          "text": "What percentage of the",
+          "x": 35.52,
+          "y": 180.0,
+          "width": 99.84,
+          "height": 9.119995,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.941
+        },
+        {
+          "text": "largest demographic segment of respondents reported not conducting promotions to",
+          "x": 171.84,
+          "y": 180.0,
+          "width": 357.6,
+          "height": 9.119995,
+          "font_name": "OCR",
+          "font_size": 9.12,
+          "confidence": 0.942
+        },
+        {
+          "text": "Gold quotes:",
+          "x": 234.23999,
+          "y": 209.76,
+          "width": 59.52002,
+          "height": 12.960007,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.957
+        },
+        {
+          "text": "imaged’)",
+          "x": 346.08,
+          "y": 209.76,
+          "width": 37.92,
+          "height": 19.199999,
+          "font_name": "OCR",
+          "font_size": 19.199999,
+          "confidence": 0.448
+        },
+        {
+          "text": "Multimodal answer:",
+          "x": 34.559998,
+          "y": 233.28,
+          "width": 83.52,
+          "height": 6.720001,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.947
+        },
+        {
+          "text": "The question asks for the parcantage of respondents from the second largest demographic segment who reported not conducting",
+          "x": 36.96,
+          "y": 244.79999,
+          "width": 520.31995,
+          "height": 9.12001,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.956
+        },
+        {
+          "text": "promotions ta customers over Wi-Fi in 2015.",
+          "x": 37.44,
+          "y": 255.84,
+          "width": 178.08,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.944
+        },
+        {
+          "text": "To determine this,",
+          "x": 36.96,
+          "y": 266.88,
+          "width": 71.52,
+          "height": 7.6799927,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.954
+        },
+        {
+          "text": "we nead to analyze the data",
+          "x": 111.84,
+          "y": 267.36,
+          "width": 113.759995,
+          "height": 8.160004,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.932
+        },
+        {
+          "text": "provided",
+          "x": 228.48,
+          "y": 266.88,
+          "width": 33.6,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.967
+        },
+        {
+          "text": "in",
+          "x": 265.91998,
+          "y": 268.8,
+          "width": 6.24,
+          "height": 4.7999997,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.959
+        },
+        {
+          "text": "the figures:",
+          "x": 275.04,
+          "y": 266.88,
+          "width": 44.639984,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.968
+        },
+        {
+          "text": "1",
+          "x": 47.52,
+          "y": 285.6,
+          "width": 1.4399999,
+          "height": 4.3199997,
+          "font_name": "OCR",
+          "font_size": 4.3199997,
+          "confidence": 0.967
+        },
+        {
+          "text": "Figure 1: This figure shows tha segments of respondents by thair industry",
+          "x": 53.76,
+          "y": 283.19998,
+          "width": 296.63998,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.968
+        },
+        {
+          "text": "The segments",
+          "x": 393.6,
+          "y": 283.19998,
+          "width": 57.600006,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.968
+        },
+        {
+          "text": "ara:",
+          "x": 454.08,
+          "y": 285.12,
+          "width": 14.4,
+          "height": 5.2799997,
+          "font_name": "OCR",
+          "font_size": 5.2799997,
+          "confidence": 0.917
+        },
+        {
+          "text": "o",
+          "x": 61.44,
+          "y": 300.96,
+          "width": 3.36,
+          "height": 3.84,
+          "font_name": "OCR",
+          "font_size": 3.84,
+          "confidence": 0.61
+        },
+        {
+          "text": "General Merchandise &",
+          "x": 69.119995,
+          "y": 298.08,
+          "width": 95.03999,
+          "height": 6.720001,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.828
+        },
+        {
+          "text": "Specialty: 63%",
+          "x": 168.48,
+          "y": 298.08,
+          "width": 59.039993,
+          "height": 8.639984,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.935
+        },
+        {
+          "text": "Hospitality: 23%",
+          "x": 69.6,
+          "y": 313.44,
+          "width": 64.32,
+          "height": 8.639984,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.603
+        },
+        {
+          "text": "Food, Drug, Conv, Mass: 14%",
+          "x": 69.6,
+          "y": 328.32,
+          "width": 120.48,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.955
+        },
+        {
+          "text": "From this information, the second largest segment",
+          "x": 54.239998,
+          "y": 343.68,
+          "width": 201.12,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.964
+        },
+        {
+          "text": "is",
+          "x": 258.72,
+          "y": 345.6,
+          "width": 5.7599998,
+          "height": 4.7999997,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.96
+        },
+        {
+          "text": "“Hospitality” at 23%",
+          "x": 267.36,
+          "y": 343.68,
+          "width": 78.72,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.461
+        },
+        {
+          "text": "2",
+          "x": 46.559998,
+          "y": 361.44,
+          "width": 3.36,
+          "height": 4.3199997,
+          "font_name": "OCR",
+          "font_size": 4.3199997,
+          "confidence": 0.961
+        },
+        {
+          "text": "Figure 2: This figure",
+          "x": 54.239998,
+          "y": 359.03998,
+          "width": 81.6,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.967
+        },
+        {
+          "text": "provides insights",
+          "x": 139.68,
+          "y": 357.12,
+          "width": 66.240005,
+          "height": 12.959991,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.877
+        },
+        {
+          "text": "into",
+          "x": 209.28,
+          "y": 359.52,
+          "width": 13.44,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.651
+        },
+        {
+          "text": "the responses categorized as \"Yes\"",
+          "x": 226.56,
+          "y": 359.03998,
+          "width": 141.6,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.957
+        },
+        {
+          "text": "or \"No\"",
+          "x": 371.52,
+          "y": 357.12,
+          "width": 27.360016,
+          "height": 12.959991,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.903
+        },
+        {
+          "text": "for conducting promotions",
+          "x": 402.72,
+          "y": 359.03998,
+          "width": 104.16,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.947
+        },
+        {
+          "text": "over",
+          "x": 509.75998,
+          "y": 360.96,
+          "width": 17.76,
+          "height": 4.7999997,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.955
+        },
+        {
+          "text": "Wi-Fi,",
+          "x": 529.92,
+          "y": 359.03998,
+          "width": 22.56,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.934
+        },
+        {
+          "text": "Far the Hospitality segment:",
+          "x": 54.239998,
+          "y": 369.12,
+          "width": 111.83999,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.913
+        },
+        {
+          "text": "Yes: 15%",
+          "x": 69.119995,
+          "y": 384.47998,
+          "width": 37.440002,
+          "height": 7.200012,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.638
+        },
+        {
+          "text": "o",
+          "x": 61.44,
+          "y": 403.19998,
+          "width": 3.36,
+          "height": 3.84,
+          "font_name": "OCR",
+          "font_size": 3.84,
+          "confidence": 0.55
+        },
+        {
+          "text": "No: 85%",
+          "x": 69.6,
+          "y": 400.31998,
+          "width": 34.560005,
+          "height": 6.720001,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.957
+        },
+        {
+          "text": "Combining this",
+          "x": 37.44,
+          "y": 415.68,
+          "width": 60.000004,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.959
+        },
+        {
+          "text": "information, the second largest demographic segment (Hospitality) repoded",
+          "x": 100.32,
+          "y": 415.68,
+          "width": 303.36,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.943
+        },
+        {
+          "text": "that",
+          "x": 406.08,
+          "y": 411.36,
+          "width": 15.839999,
+          "height": 14.88,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.969
+        },
+        {
+          "text": "85%",
+          "x": 425.75998,
+          "y": 415.68,
+          "width": 14.4,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.948
+        },
+        {
+          "text": "of respondents did not",
+          "x": 444.47998,
+          "y": 415.68,
+          "width": 90.71997,
+          "height": 8.160004,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.944
+        },
+        {
+          "text": "conduct promotions to customers",
+          "x": 37.44,
+          "y": 426.72,
+          "width": 133.91998,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.935
+        },
+        {
+          "text": "over",
+          "x": 174.23999,
+          "y": 428.63998,
+          "width": 17.76,
+          "height": 4.7999997,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.931
+        },
+        {
+          "text": "Wi-Fi in 2015.",
+          "x": 194.4,
+          "y": 426.72,
+          "width": 54.72,
+          "height": 6.720001,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.93
+        },
+        {
+          "text": "This matches",
+          "x": 254.4,
+          "y": 424.8,
+          "width": 51.359985,
+          "height": 12.0,
+          "font_name": "OCR",
+          "font_size": 12.0,
+          "confidence": 0.968
+        },
+        {
+          "text": "the",
+          "x": 309.6,
+          "y": 427.19998,
+          "width": 12.0,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.856
+        },
+        {
+          "text": "short answer provided.",
+          "x": 324.47998,
+          "y": 426.72,
+          "width": 91.20001,
+          "height": 8.160004,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.916
+        },
+        {
+          "text": "oe",
+          "x": 437.28,
+          "y": 438.72,
+          "width": 10.08,
+          "height": 3.84,
+          "font_name": "OCR",
+          "font_size": 3.84,
+          "confidence": 0.39
+        },
+        {
+          "text": "text’; ‘Differentiated",
+          "x": 147.84,
+          "y": 709.44,
+          "width": 77.76001,
+          "height": 7.199951,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.592
+        },
+        {
+          "text": "13,",
+          "x": 348.96,
+          "y": 709.44,
+          "width": 11.04,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.947
+        },
+        {
+          "text": "47},",
+          "x": 404.63998,
+          "y": 709.44,
+          "width": 14.4,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.936
+        },
+        {
+          "text": "the",
+          "x": 209.28,
+          "y": 718.56,
+          "width": 10.559999,
+          "height": 12.48,
+          "font_name": "OCR",
+          "font_size": 12.48,
+          "confidence": 0.949
+        },
+        {
+          "text": "playing field on",
+          "x": 223.68,
+          "y": 720.48,
+          "width": 56.639984,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.795
+        },
+        {
+          "text": "information Up",
+          "x": 283.19998,
+          "y": 720.48,
+          "width": 55.680023,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.941
+        },
+        {
+          "text": "sel! op",
+          "x": 340.32,
+          "y": 718.56,
+          "width": 23.99997,
+          "height": 12.47998,
+          "font_name": "OCR",
+          "font_size": 12.48,
+          "confidence": 0.561
+        },
+        {
+          "text": "to",
+          "x": 432.96,
+          "y": 721.44,
+          "width": 7.2,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.962
+        },
+        {
+          "text": "\"Leveling",
+          "x": 173.28,
+          "y": 720.95996,
+          "width": 47.52,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.831
+        },
+        {
+          "text": "\"Survey",
+          "x": 173.28,
+          "y": 730.56,
+          "width": 27.84,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.852
+        },
+        {
+          "text": "al",
+          "x": 533.27997,
+          "y": 720.95996,
+          "width": 20.16,
+          "height": 17.76,
+          "font_name": "OCR",
+          "font_size": 17.76,
+          "confidence": 0.434
+        },
+        {
+          "text": "148},",
+          "x": 552.95996,
+          "y": 724.32,
+          "width": 17.76,
+          "height": 17.279999,
+          "font_name": "OCR",
+          "font_size": 17.279999,
+          "confidence": 0.678
+        },
+        {
+          "text": ",",
+          "x": 147.36,
+          "y": 736.32,
+          "width": 1.4399999,
+          "height": 1.4399999,
+          "font_name": "OCR",
+          "font_size": 1.4399999,
+          "confidence": 0.536
+        },
+        {
+          "text": "Respondents by Segment applied to",
+          "x": 204.95999,
+          "y": 730.56,
+          "width": 136.79999,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.944
+        },
+        {
+          "text": "average retaller sizes per",
+          "x": 344.16,
+          "y": 731.04,
+          "width": 95.99997,
+          "height": 7.6799927,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.933
+        },
+        {
+          "text": "-",
+          "x": 547.68,
+          "y": 735.83997,
+          "width": 1.4399999,
+          "height": 1.4399999,
+          "font_name": "OCR",
+          "font_size": 1.4399999,
+          "confidence": 0.598
+        },
+        {
+          "text": ",",
+          "x": 147.36,
+          "y": 745.92,
+          "width": 1.4399999,
+          "height": 1.92,
+          "font_name": "OCR",
+          "font_size": 1.92,
+          "confidence": 0.395
+        },
+        {
+          "text": "text’: \"Wi-Fi VendorS slection Criteria,",
+          "x": 151.68,
+          "y": 740.63995,
+          "width": 145.91998,
+          "height": 7.200012,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.667
+        },
+        {
+          "text": "14,",
+          "x": 340.8,
+          "y": 740.63995,
+          "width": 9.599999,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.953
+        },
+        {
+          "text": "50},",
+          "x": 396.47998,
+          "y": 740.63995,
+          "width": 13.44,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.912
+        },
+        {
+          "text": "*,",
+          "x": 280.32,
+          "y": 748.8,
+          "width": 5.2799997,
+          "height": 12.0,
+          "font_name": "OCR",
+          "font_size": 12.0,
+          "confidence": 0.387
+        },
+        {
+          "text": "8,",
+          "x": 325.91998,
+          "y": 750.72,
+          "width": 6.24,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.96
+        },
+        {
+          "text": "layout id:",
+          "x": 336.0,
+          "y": 750.72,
+          "width": 39.359985,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.767
+        },
+        {
+          "text": "|",
+          "x": 147.36,
+          "y": 756.0,
+          "width": 1.4399999,
+          "height": 1.92,
+          "font_name": "OCR",
+          "font_size": 1.92,
+          "confidence": 0.413
+        },
+        {
+          "text": "tent”: ‘Respondent Demographics",
+          "x": 151.68,
+          "y": 750.72,
+          "width": 132.95999,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.427
+        },
+        {
+          "text": "34},",
+          "x": 378.72,
+          "y": 750.72,
+          "width": 12.96,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.916
+        },
+        {
+          "text": "\"tend\": \"Provides customers with",
+          "x": 151.68,
+          "y": 760.8,
+          "width": 115.67999,
+          "height": 6.7200317,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.511
+        },
+        {
+          "text": "a",
+          "x": 270.24,
+          "y": 762.72,
+          "width": 4.3199997,
+          "height": 4.3199997,
+          "font_name": "OCR",
+          "font_size": 4.3199997,
+          "confidence": 0.968
+        },
+        {
+          "text": "full",
+          "x": 277.91998,
+          "y": 758.88,
+          "width": 10.559999,
+          "height": 12.48,
+          "font_name": "OCR",
+          "font_size": 12.48,
+          "confidence": 0.951
+        },
+        {
+          "text": "understanding of",
+          "x": 290.4,
+          "y": 760.8,
+          "width": 64.79999,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.794
+        },
+        {
+          "text": "bandwidth",
+          "x": 357.12,
+          "y": 760.8,
+          "width": 38.399998,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.442
+        },
+        {
+          "text": "usage",
+          "x": 398.4,
+          "y": 762.72,
+          "width": 23.039999,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.908
+        },
+        {
+          "text": "a.",
+          "x": 423.84,
+          "y": 761.76,
+          "width": 12.0,
+          "height": 12.0,
+          "font_name": "OCR",
+          "font_size": 12.0,
+          "confidence": 0.757
+        },
+        {
+          "text": "‘pags",
+          "x": 449.28,
+          "y": 761.27997,
+          "width": 25.439999,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.486
+        },
+        {
+          "text": "32,",
+          "x": 488.16,
+          "y": 760.8,
+          "width": 11.5199995,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.962
+        },
+        {
+          "text": "br",
+          "x": 500.63998,
+          "y": 758.88,
+          "width": 25.92,
+          "height": 21.119999,
+          "font_name": "OCR",
+          "font_size": 21.119999,
+          "confidence": 0.467
+        },
+        {
+          "text": ",",
+          "x": 147.84,
+          "y": 766.07996,
+          "width": 0.96,
+          "height": 1.92,
+          "font_name": "OCR",
+          "font_size": 1.92,
+          "confidence": 0.569
+        },
+        {
+          "text": "teat’:",
+          "x": 151.2,
+          "y": 771.83997,
+          "width": 19.199999,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.359
+        },
+        {
+          "text": "\"How does",
+          "x": 174.72,
+          "y": 769.44,
+          "width": 37.92,
+          "height": 12.960022,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.921
+        },
+        {
+          "text": "Wi",
+          "x": 215.51999,
+          "y": 771.83997,
+          "width": 9.599999,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.956
+        },
+        {
+          "text": "Fi",
+          "x": 228.95999,
+          "y": 771.83997,
+          "width": 5.2799997,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.891
+        },
+        {
+          "text": "lenditself",
+          "x": 237.59999,
+          "y": 771.36,
+          "width": 33.6,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.333
+        },
+        {
+          "text": "Loyalty",
+          "x": 320.63998,
+          "y": 769.44,
+          "width": 26.4,
+          "height": 12.96,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.897
+        },
+        {
+          "text": "and",
+          "x": 350.88,
+          "y": 769.44,
+          "width": 12.48,
+          "height": 12.96,
+          "font_name": "OCR",
+          "font_size": 12.96,
+          "confidence": 0.968
+        },
+        {
+          "text": "what",
+          "x": 366.24,
+          "y": 772.32,
+          "width": 17.76,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.958
+        },
+        {
+          "text": "type of",
+          "x": 387.36,
+          "y": 771.83997,
+          "width": 32.160034,
+          "height": 8.160034,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.913
+        },
+        {
+          "text": "\"page.|",
+          "x": 424.8,
+          "y": 766.07996,
+          "width": 30.720001,
+          "height": 13.919983,
+          "font_name": "OCR",
+          "font_size": 13.92,
+          "confidence": 0.443
+        },
+        {
+          "text": "id’:",
+          "x": 456.0,
+          "y": 771.83997,
+          "width": 10.559999,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.48
+        },
+        {
+          "text": "35,",
+          "x": 469.91998,
+          "y": 771.36,
+          "width": 10.559999,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.899
+        },
+        {
+          "text": "ut_id:",
+          "x": 519.83997,
+          "y": 760.8,
+          "width": 21.6,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.342
+        },
+        {
+          "text": "123},",
+          "x": 545.76,
+          "y": 760.8,
+          "width": 17.76,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.882
+        },
+        {
+          "text": ",",
+          "x": 147.84,
+          "y": 777.12,
+          "width": 0.96,
+          "height": 1.92,
+          "font_name": "OCR",
+          "font_size": 1.92,
+          "confidence": 0.309
+        },
+        {
+          "text": "id\"",
+          "x": 511.19998,
+          "y": 769.44,
+          "width": 11.5199995,
+          "height": 12.48,
+          "font_name": "OCR",
+          "font_size": 12.48,
+          "confidence": 0.605
+        },
+        {
+          "text": "135},",
+          "x": 527.04,
+          "y": 771.83997,
+          "width": 17.279999,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.879
+        },
+        {
+          "text": "\"text\":",
+          "x": 147.36,
+          "y": 781.92,
+          "width": 23.039999,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.424
+        },
+        {
+          "text": "What if",
+          "x": 173.28,
+          "y": 781.92,
+          "width": 28.320007,
+          "height": 6.23999,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.596
+        },
+        {
+          "text": "your Wi-Fi",
+          "x": 205.44,
+          "y": 775.2,
+          "width": 37.439987,
+          "height": 16.799988,
+          "font_name": "OCR",
+          "font_size": 16.8,
+          "confidence": 0.895
+        },
+        {
+          "text": "could feed this information into",
+          "x": 245.76,
+          "y": 781.44,
+          "width": 116.16002,
+          "height": 6.7199707,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.482
+        },
+        {
+          "text": "your",
+          "x": 364.8,
+          "y": 775.2,
+          "width": 15.839999,
+          "height": 16.8,
+          "font_name": "OCR",
+          "font_size": 16.8,
+          "confidence": 0.964
+        },
+        {
+          "text": ",",
+          "x": 407.03998,
+          "y": 775.2,
+          "width": 4.7999997,
+          "height": 16.8,
+          "font_name": "OCR",
+          "font_size": 16.8,
+          "confidence": 0.571
+        },
+        {
+          "text": "22,",
+          "x": 452.16,
+          "y": 781.44,
+          "width": 11.04,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.933
+        },
+        {
+          "text": "1ayout_ id:",
+          "x": 467.03998,
+          "y": 775.2,
+          "width": 38.880005,
+          "height": 16.799988,
+          "font_name": "OCR",
+          "font_size": 16.8,
+          "confidence": 0.488
+        },
+        {
+          "text": "90},",
+          "x": 508.8,
+          "y": 781.44,
+          "width": 13.44,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.894
+        },
+        {
+          "text": "if your",
+          "x": 197.28,
+          "y": 786.24,
+          "width": 24.0,
+          "height": 15.840027,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.945
+        },
+        {
+          "text": "Wi-Fi",
+          "x": 225.12,
+          "y": 786.24,
+          "width": 17.76,
+          "height": 15.839999,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.939
+        },
+        {
+          "text": "your Pos...",
+          "x": 364.8,
+          "y": 786.24,
+          "width": 39.839996,
+          "height": 15.840027,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.933
+        },
+        {
+          "text": "ext,",
+          "x": 129.59999,
+          "y": 792.0,
+          "width": 19.199999,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.696
+        },
+        {
+          "text": "\"What",
+          "x": 173.28,
+          "y": 791.51996,
+          "width": 28.32,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.605
+        },
+        {
+          "text": "could feed this information into",
+          "x": 245.28,
+          "y": 791.51996,
+          "width": 116.640015,
+          "height": 6.7200317,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.871
+        },
+        {
+          "text": "Pos,CRM",
+          "x": 384.96,
+          "y": 791.51996,
+          "width": 38.879997,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.77
+        },
+        {
+          "text": "21,",
+          "x": 474.24,
+          "y": 791.51996,
+          "width": 10.559999,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.931
+        },
+        {
+          "text": "Tayout",
+          "x": 489.12,
+          "y": 786.24,
+          "width": 25.439999,
+          "height": 15.839999,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.382
+        },
+        {
+          "text": "id: 80},",
+          "x": 516.95996,
+          "y": 791.51996,
+          "width": 27.360046,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.74
+        },
+        {
+          "text": "\"type\".",
+          "x": 110.399994,
+          "y": 802.07996,
+          "width": 20.64,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.568
+        },
+        {
+          "text": "text, ‘text:",
+          "x": 134.87999,
+          "y": 802.07996,
+          "width": 37.920013,
+          "height": 6.7199707,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.422
+        },
+        {
+          "text": "'Are you",
+          "x": 178.08,
+          "y": 802.07996,
+          "width": 30.720001,
+          "height": 8.159973,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.785
+        },
+        {
+          "text": "doing promotions",
+          "x": 212.15999,
+          "y": 797.27997,
+          "width": 63.84001,
+          "height": 14.880005,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.922
+        },
+        {
+          "text": "to customers over",
+          "x": 279.36,
+          "y": 802.56,
+          "width": 68.639984,
+          "height": 5.76001,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.968
+        },
+        {
+          "text": "Wi-Fi?%',",
+          "x": 349.91998,
+          "y": 801.6,
+          "width": 37.92,
+          "height": 7.2,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.404
+        },
+        {
+          "text": "13,",
+          "x": 431.03998,
+          "y": 801.6,
+          "width": 8.16,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.932
+        },
+        {
+          "text": "48},",
+          "x": 485.75998,
+          "y": 802.07996,
+          "width": 14.88,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.949
+        },
+        {
+          "text": "if",
+          "x": 202.56,
+          "y": 806.39996,
+          "width": 4.3199997,
+          "height": 15.839999,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.935
+        },
+        {
+          "text": "Wi-Fi",
+          "x": 228.95999,
+          "y": 806.39996,
+          "width": 18.24,
+          "height": 15.839999,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.932
+        },
+        {
+          "text": "could feed",
+          "x": 251.51999,
+          "y": 806.39996,
+          "width": 36.0,
+          "height": 15.840027,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.703
+        },
+        {
+          "text": "What",
+          "x": 178.08,
+          "y": 811.68,
+          "width": 46.559998,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.953
+        },
+        {
+          "text": "your",
+          "x": 209.28,
+          "y": 811.68,
+          "width": 15.36,
+          "height": 8.639999,
+          "font_name": "OCR",
+          "font_size": 8.639999,
+          "confidence": 0.969
+        },
+        {
+          "text": "informason",
+          "x": 307.19998,
+          "y": 811.68,
+          "width": 58.079998,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.645
+        },
+        {
+          "text": "page id\": 20, layout 71},",
+          "x": 446.88,
+          "y": 811.68,
+          "width": 108.47998,
+          "height": 8.639954,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.704
+        },
+        {
+          "text": "text’",
+          "x": 156.0,
+          "y": 812.16,
+          "width": 18.24,
+          "height": 6.24,
+          "font_name": "OCR",
+          "font_size": 6.24,
+          "confidence": 0.434
+        },
+        {
+          "text": "'Data analytics realtime",
+          "x": 178.56,
+          "y": 817.44,
+          "width": 87.359985,
+          "height": 14.880005,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.864
+        },
+        {
+          "text": "this",
+          "x": 291.36,
+          "y": 812.63995,
+          "width": 12.96,
+          "height": 5.7599998,
+          "font_name": "OCR",
+          "font_size": 5.7599998,
+          "confidence": 0.929
+        },
+        {
+          "text": "info",
+          "x": 351.84,
+          "y": 806.39996,
+          "width": 13.44,
+          "height": 15.839999,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.782
+        },
+        {
+          "text": "your",
+          "x": 368.16,
+          "y": 813.6,
+          "width": 16.32,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.965
+        },
+        {
+          "text": "a..",
+          "x": 428.63998,
+          "y": 813.6,
+          "width": 4.3199997,
+          "height": 4.7999997,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.776
+        },
+        {
+          "text": "ii\"",
+          "x": 527.04,
+          "y": 806.39996,
+          "width": 9.599999,
+          "height": 15.839999,
+          "font_name": "OCR",
+          "font_size": 15.839999,
+          "confidence": 0.38
+        },
+        {
+          "text": "type\"",
+          "x": 110.399994,
+          "y": 822.24,
+          "width": 20.64,
+          "height": 7.68,
+          "font_name": "OCR",
+          "font_size": 7.68,
+          "confidence": 0.636
+        },
+        {
+          "text": "text, ‘text:",
+          "x": 134.87999,
+          "y": 822.24,
+          "width": 40.320007,
+          "height": 6.7199707,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.51
+        },
+        {
+          "text": "access to a",
+          "x": 268.32,
+          "y": 822.72,
+          "width": 43.679993,
+          "height": 5.76001,
+          "font_name": "OCR",
+          "font_size": 4.7999997,
+          "confidence": 0.945
+        },
+        {
+          "text": "single view",
+          "x": 315.36,
+          "y": 817.44,
+          "width": 38.880005,
+          "height": 14.880005,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.936
+        },
+        {
+          "text": "of",
+          "x": 358.56,
+          "y": 821.76,
+          "width": 7.2,
+          "height": 6.72,
+          "font_name": "OCR",
+          "font_size": 6.72,
+          "confidence": 0.954
+        },
+        {
+          "text": "data,",
+          "x": 369.6,
+          "y": 817.44,
+          "width": 16.8,
+          "height": 14.88,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.401
+        },
+        {
+          "text": "information..”,",
+          "x": 388.31998,
+          "y": 827.51996,
+          "width": 51.84,
+          "height": 1.4399999,
+          "font_name": "OCR",
+          "font_size": 1.4399999,
+          "confidence": 0.401
+        },
+        {
+          "text": "‘page",
+          "x": 444.0,
+          "y": 817.44,
+          "width": 19.199999,
+          "height": 14.88,
+          "font_name": "OCR",
+          "font_size": 14.88,
+          "confidence": 0.594
+        },
+        {
+          "text": "30, layout_if:",
+          "x": 481.91998,
+          "y": 821.76,
+          "width": 53.28003,
+          "height": 8.640015,
+          "font_name": "OCR",
+          "font_size": 7.2,
+          "confidence": 0.932
+        },
+        {
+          "text": "118",
+          "x": 539.04,
+          "y": 821.76,
+          "width": 17.279999,
+          "height": 8.16,
+          "font_name": "OCR",
+          "font_size": 8.16,
+          "confidence": 0.465
+        }
+      ]
+    }
+  ]
+}
